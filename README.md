@@ -2,92 +2,56 @@
 
 
 
-## Getting started
+### Architecture
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+![Architecture Diagram](/docs/architecture.png)
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+### Basic Usage Workflow:
+* Put a scanned image  in s3 at `s3://store-resource-<account-number>-<region>/acquire/`
+* This action triggers the `state-pipeline` step function which will: 
+  * Detect the langauage, schema and type of the document in the image with Amazon Bedrock Claude Sonnet
+  * Extract the data from the image in the json format
+  * Apply business rules to the extracted JSON (currently a pass-through operation)
+  * Convert the extracted JSON to Textract format 
+  * Send the image and extracted content to A2I for human review
+  * Once human review is complete, convert output to a spreadsheet 
+* Monitor document status in DynamoDB in the `table-pipeline` table
+* Once your document has reached the `Status` `Augment#Waiting`, it's time to perform human review using the worker portal (descrbied below)
+* After human review, find the final Excel spreadsheet in `s3://store-resource-<account-number>-<region>/acquire/catalog`
 
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin https://gitlab.aws.dev/mestroma/multilingual-content-processing.git
-git branch -M main
-git push -uf origin main
-```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](https://gitlab.aws.dev/mestroma/multilingual-content-processing/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
 
 ## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+### SageMaker Private Workforce Setup
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+This application uses SageMaker labeling workforces to manage workers and distribute tasks. Create a private workforce, workers team called `primary` and `quality`, and assign yourself to both teams using these instructions: https://docs.aws.amazon.com/sagemaker/latest/dg/sms-workforce-create-private-console.html#create-workforce-sm-console
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+Once you’ve added yourself to the private workforce teams and confirmed your email, take note of the worker portal URL from the AWS Console by:
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+* Navigate to SageMaker
+* Navigate to Ground Truth → Labeling workforces
+* Click the Private tab
+* Note the URL `Labeling portal sign-in` - you will log in here to perform A2I human reviews.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+### Application Deployment with CDK
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+*Pre-Requisites*
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+1. Install CDK Toolkit
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+- npm install -g aws-cdk
 
-## License
-For open source projects, say how it is licensed.
+2. Install Docker, and Run
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+- For Mac : https://docs.docker.com/docker-for-mac/install
+- For Win : https://docs.docker.com/docker-for-windows/install
+
+*Instruction to Deploy Application to AWS Cloud*
+
+1. cd multilingual-content-processing
+3. python3 -m venv .venv                    - Create virtual environment
+3. source .venv/bin/activate                - Enter virtual environment
+4. pip install -r requirements.txt          - Install dependencies in virtual environment
+5. cdk bootstrap                            - Only run this once per account setup
+6. edit cdk.json, set your work team name   - Pre-create the workteam via aws console, and make sure to match workteam name in same region/account
+7. cdk deploy --all                         - Deploy application
+
