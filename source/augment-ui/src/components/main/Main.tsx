@@ -3,7 +3,8 @@ import styled from "styled-components";
 import AppData from "components/main/AppData";
 import AppNavbar from "components/main/AppNavbar";
 // import PdfView from "components/pdf/PdfView";
-import PDFViewer from "components/pdf-viewer/PDFViewer";
+// import PDFViewer from "components/pdf-viewer/PDFViewer";
+import ImageViewer from "components/image-viewer/ImageViewer";
 import TableView from "components/table/TableView";
 // import { useStoreActions, useStoreState } from "appstore";
 
@@ -36,17 +37,7 @@ export default () => {
       <AppData />
       <AppNavbar />
       <ContentContainer>
-        {/* <PdfView
-          url={url}
-          filename={filename}
-          pageNumber={selectedPageNumber}
-          numPages={numPages}
-          setNumPages={(newNumPages) => setNumPages({ numPages: newNumPages })}
-          setSelectedPage={(pageNumber) => {
-            setSelectedPageNumber({ pageNumber });
-          }}
-        /> */}
-        <PDFViewer />
+        <ImageViewer />
         <TableView />
       </ContentContainer>
     </MainContainer>
