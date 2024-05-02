@@ -97,22 +97,16 @@ class PipelineMachineConstruct(Construct):
             id    = 'process' 
             )
 
-        # acquire_step_begin = self.__get_process_chain(Process.ACQUIRE)
         classify_step_begin = self.__get_process_chain(Process.CLASSIFY)
-        # convert_step_begin = self.__get_process_chain(Process.CONVERT)
         extract_step_begin = self.__get_process_chain(Process.EXTRACT)
-        # reshape_step_begin = self.__get_process_chain(Process.RESHAPE)
         operate_step_begin = self.__get_process_chain(Process.OPERATE)
         augment_step_begin = self.__get_process_chain(Process.AUGMENT)
         catalog_step_begin = self.__get_process_chain(Process.CATALOG)
 
         parallel_state = (
             parallel_state
-            # .branch(acquire_step_begin)
             .branch(classify_step_begin)
-            # .branch(convert_step_begin)
             .branch(extract_step_begin)
-            # .branch(reshape_step_begin)
             .branch(operate_step_begin)
             .branch(augment_step_begin)
             .branch(catalog_step_begin)
