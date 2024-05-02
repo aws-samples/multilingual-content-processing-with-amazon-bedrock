@@ -1,6 +1,6 @@
-## AWS Tabular Document Digitization Human-in-the-loop Annotation Interface
+## Document Review Human-in-the-loop Annotation Interface
 
-Annotation tool for validating tabular data OCR'd from PDFs.
+Annotation tool for validating tabular data OCR'd from Images.
 
 Compatible with AWS A2I and Sagemaker: Ground Truth
 

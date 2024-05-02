@@ -1,6 +1,6 @@
 {
-  "short_name": "AWS Tabular Document Digitization Annotation Interface",
-  "name": "AWS Tabular Document Digitization Annotation Interface",
+  "short_name": "Document Review Annotation Interface",
+  "name": "Document Review Annotation Interface",
   "icons": [
     {
       "src": "favicon.ico",

@@ -165,7 +165,7 @@ class PipelineProcessConstruct(Construct):
                 workteam_arn      = workteam_arn,
                 task_count        = 1,
                 task_description  = f'Review Tables from Source Document - {workteam.title()}',
-                task_title        = f'Tabular Document Digitization'
+                task_title        = f'Document Review'
             )
 
             allowed_workflow_resource_arns.append(workflow_resource.get_workflow_arn())

@@ -28,7 +28,9 @@ def lambda_handler(event, context):
     try:
 
         hil_document = sourceS3Uri.GetJSON()
-        hil_document = convert_to_textract_format(hil_document)
+        hil_document = convert_to_textract_format(hil_document, document.DocumentID)
+
+        print(hil_document)
 
         # Add empty tableType and headerColumnTypes to each page table
         # (this is where A2I annotation values will go)
@@ -55,7 +57,7 @@ def lambda_handler(event, context):
 
     Bus.PutMessage(stage = STAGE, message_body = message.to_json())
 
-def convert_to_textract_format(doc):
+def convert_to_textract_format(doc, doc_id):
     output_data = {
         "numPages": 1,
         "pages": [
@@ -66,7 +68,7 @@ def convert_to_textract_format(doc):
         ],
         "tableTypes":[],
         "metadata": {
-            "sourceDocumentUrl": "s3://tdd-store-document-965637542341/extract/faktura.pdf"
+            "sourceDocumentUrl": f's3://{STORE_BUCKET}/acquire/{doc_id}.png'
         }
     }
 
