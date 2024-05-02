@@ -63,9 +63,7 @@ class PipelineProcessConstruct(Construct):
 
         
         self.__create_stage_classify(stage = Process.CLASSIFY)
-        # self.__create_stage_convert(stage = Process.CONVERT)
         self.__create_stage_extract(stage = Process.EXTRACT)
-        # self.__create_stage_reshape(stage = Process.RESHAPE)
         self.__create_stage_operate(stage = Process.OPERATE)
         self.__create_stage_augment(stage = Process.AUGMENT)
         self.__create_stage_catalog(stage = Process.CATALOG)
@@ -126,13 +124,6 @@ class PipelineProcessConstruct(Construct):
         return workteams
 
 
-    def __create_stage_acquire(self, stage):
-
-        queue = self.__create_queue(stage)
-
-        self.__create_actor_lambda(stage, queue)
-        self.__create_begin_lambda(stage, queue)
-        self.__create_await_lambda(stage, queue)
 
     def __create_stage_augment(self, stage):
 
@@ -231,13 +222,6 @@ class PipelineProcessConstruct(Construct):
         self.__create_begin_lambda(stage, queue)
         self.__create_await_lambda(stage, queue)
 
-    def __create_stage_convert(self, stage):
-
-        queue = self.__create_queue(stage)
-
-        self.__create_actor_lambda(stage, queue)
-        self.__create_begin_lambda(stage, queue)
-        self.__create_await_lambda(stage, queue)
 
     def __create_stage_extract(self, stage):
 
