@@ -21,7 +21,7 @@ const InstructionsModal = (props: {
       </Modal.Header>
 
       <Modal.Body>
-        <p>Tabular Document Digitization annotator instructions here</p>
+        <p>Document Digitization annotator instructions here</p>
       </Modal.Body>
 
       <Modal.Footer>
@@ -141,7 +141,7 @@ export default () => {
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Navbar.Brand className="d-flex align-items-center mr" href="#home">
-        <LogoImage src={logoUrl} /> Tabular Document Annotation Tool
+        Document Annotation Tool
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">

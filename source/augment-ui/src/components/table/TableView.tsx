@@ -31,7 +31,6 @@ const TableViewContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-
   padding: 1rem 1.25rem;
   background: white;
   border-radius: 8px;
@@ -139,12 +138,7 @@ const TableHeader = () => {
 
   const numPages = useStoreState((s) => s.documentModel.numPages);
   const documentPages = useStoreState((s) => s.documentModel.documentPages);
-  const selectedConfidenceScoreIndex = useStoreState(
-    (s) => s.internal.selectedConfidenceScoreIndex
-  );
-  const setSelectedConfidenceScoreIndex = useStoreActions(
-    (s) => s.setSelectedConfidenceScoreIndex
-  );
+ 
   const setSelectedPageNumber = useStoreActions((s) => s.setSelectedPageNumber);
   const setSelectedTableIndex = useStoreActions((s) => s.setSelectedTableIndex);
   const setSelectedTableTableType = useStoreActions(
@@ -155,18 +149,6 @@ const TableHeader = () => {
   if (documentPages.length === 0) {
     return <div className="text-muted">Loading...</div>;
   }
-
-  const onSelectConfidenceScore = (index: number) => {
-    if (selectedConfidenceScoreIndex === index) {
-      setSelectedConfidenceScoreIndex({
-        selectedConfidenceScoreIndex: undefined,
-      });
-      return;
-    }
-    setSelectedConfidenceScoreIndex({
-      selectedConfidenceScoreIndex: index,
-    });
-  };
 
   const prevPage = () => {
     setSelectedPageNumber({ pageNumber: selectedPageNumber - 1 });
@@ -299,23 +281,7 @@ const TableHeader = () => {
         </TableHeaderSubtitle>
       ) : null}
 
-      <ConfidenceFilterContainer>
-        <div className="mr-3 d-flex align-items-center ">Confidence Score</div>
-        <ButtonGroup>
-          {confidenceHeatmapRange.map(({ score, color }, index) => (
-            <Button
-              key={index}
-              value={index}
-              size="sm"
-              variant="light"
-              active={index === selectedConfidenceScoreIndex}
-              onClick={() => onSelectConfidenceScore(index)}
-            >
-              {index === 0 ? "<" : ">"} {score * 100}% <Square color={color} />
-            </Button>
-          ))}
-        </ButtonGroup>
-      </ConfidenceFilterContainer>
+
     </TableHeaderContainer>
   );
 };

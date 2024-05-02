@@ -61,7 +61,7 @@ class PipelineProcessConstruct(Construct):
         self.__stage_actor_lambdas = {}
         self.__stage_await_lambdas = {}
 
-        # self.__create_stage_acquire(stage = Process.ACQUIRE)
+        
         self.__create_stage_classify(stage = Process.CLASSIFY)
         # self.__create_stage_convert(stage = Process.CONVERT)
         self.__create_stage_extract(stage = Process.EXTRACT)
