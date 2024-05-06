@@ -19,13 +19,6 @@ if  __name__ == '__main__':
 
     app     = cdk.App()
 
-    baseline_stack = BaselineStack(
-        scope  = app,
-        id     = f'{prefix}-Baseline',
-        prefix = prefix,
-        suffix = suffix
-    )
-
     template_stack = TemplateStack(
         scope  = app,
         id     = f'{prefix}-Template',
@@ -44,8 +37,6 @@ if  __name__ == '__main__':
         # liquid = None
     )
 
-    template_stack.add_dependency(baseline_stack)
-    pipeline_stack.add_dependency(baseline_stack)
     pipeline_stack.add_dependency(template_stack)
 
     app.synth()
