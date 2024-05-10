@@ -18,17 +18,22 @@ from shared.bus      import Bus
 from shared.storage  import S3Uri
 from shared.loggers import Logger
 from shared.clients import BedrockClient, S3Client
-
+from rhubarb import DocAnalysis
 
 import base64
 import json
+import boto3
+
 
 class ProcessImage():
     def generateJson(self, document: Document):
         try:
 
-            document.CurrentMap.StageS3Uri = S3Uri(Bucket=STORE_BUCKET, Prefix=f'acquire/{document.DocumentID}.png')
-            response = S3Client.get_object(Bucket=STORE_BUCKET, Key=f'acquire/{document.DocumentID}.png')
+            document.CurrentMap.StageS3Uri = S3Uri(Bucket=STORE_BUCKET, Prefix=f'acquire/{document.DocumentID}')
+            response = S3Client.get_object(Bucket=STORE_BUCKET, Key=f'acquire/{document.DocumentID}')
+            
+            session = boto3.Session()
+
             image_content = response['Body'].read()
             image_base64 = base64.b64encode(image_content)
             base64_string = image_base64.decode('utf-8')
@@ -36,28 +41,14 @@ class ProcessImage():
             table_format_prompt = '''
             Here's a formalized prompt combining all the instructions:
 
-            You are given an image. Your task is to classify image as Financial Document, you also need to determine what type of financial documnent,
-            this is for example: invoice, bank statement, balance sheet, income statement, cashflow statement, etc.
-            Additionaly your task is also to detect the language in the document and describe what is the content of the document to faciltate generation of the prompt for data extraction
-            
+            You are given an image. Your task is to determine what fields can be extracted from the image and write a prompt that will instruct model in the next step how to parse json data from the image
+
             Output Instructions:
-            Please in your generated output include only JSON object nothing else, do not start your output with the text like 'Here is the JSON object with the extracted information from the invoice image, structured as per the provided guidelines:'
+            Please in your generated output include only generated prompt nothing else'
 
-            Here is an example of response you shoud return:
-            {
-                "is_financial_document": true,
-                "document_type" : "invoice",
-                "language": "Croatian"
-                "prompt": "Invoice containing details about the supplier, customer, invoice number, delivery date, product list, and summary. "
-            }
+            Here is an example of the prompt you shoud return:
+            `I want to extract the employee name, employee SSN, employee address, date of birth and phone number from this document.`
 
-            if document is not financial document just return:
-            {
-                "is_financial_document": false,
-                "document_type" : "",
-                ""language": "",
-                "prompt": " "
-             }
             '''
             
             payload = {
@@ -102,8 +93,22 @@ class ProcessImage():
             )
             
             response_body = json.loads(response['body'].read().decode('utf-8'))
-            print(response_body)
-            response_body = json.loads(response_body['content'][0]['text'])
+            response_body = response_body['content'][0]['text']
+            print("prepared prompt", response_body)
+
+            print('document.CurrentMap.StageS3Uri: ', document.CurrentMap.StageS3Uri.Url,)
+
+
+            da = DocAnalysis(file_path=document.CurrentMap.StageS3Uri.Url, boto3_session=session)
+            
+            resp = da.generate_schema(message=response_body)
+            schema = resp['output']
+
+            resp = da.run(message="Give me data from this document. Use the schema provided.",
+              output_schema=schema)
+        
+            response_body = resp['output']
+    
 
         except (
             # handle bedrock or S3 error

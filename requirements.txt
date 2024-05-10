@@ -13,3 +13,5 @@ XlsxWriter
 pandas
 pytz
 uuid
+pyrhubarb
+docker

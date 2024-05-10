@@ -7,6 +7,7 @@ from pathlib import Path
 from aws_cdk import (
     aws_lambda, Duration
 )
+from aws_cdk.aws_ecr_assets import DockerImageAsset
 from constructs import Construct
 
 class Manager:
@@ -24,7 +25,6 @@ class PipelineManagerConstruct(Construct):
         scope  : Construct,
         id     : str,
         prefix : str,
-        layers : List[aws_lambda.LayerVersion],
         source : Path,
         common : Dict,
         **kwargs,
@@ -35,7 +35,6 @@ class PipelineManagerConstruct(Construct):
         self.__scope  = scope
         self.__prefix = prefix
         self.__source = source
-        self.__layers = layers
         self.__common = common
 
         self.__manager_lambdas = {}
@@ -77,19 +76,30 @@ class PipelineManagerConstruct(Construct):
         environment = dict(self.__common)
         environment.update(environ)
 
-        lambda_function = aws_lambda.Function(
+        # docker_image = DockerImageAsset(self, f'{self.__prefix}-docker-manager-{manager}',
+        #     directory=f'{self.__source}',
+        #     file = "Dockerfile.manager",
+        #     build_args={
+        #         "STAGE": manager,
+        #     })
+
+
+        lambda_function = aws_lambda.DockerImageFunction(
             scope         = self.__scope,
             id            = f'{self.__prefix}-manager-{manager}',
             function_name = f'{self.__prefix}-manager-{manager}',
-            code          = aws_lambda.Code.from_asset(f'{self.__source}/manager/{manager}'),
-            handler       = 'handler.lambda_handler',
-            runtime       = aws_lambda.Runtime.PYTHON_3_8,
+            code          = aws_lambda.DockerImageCode.from_image_asset(
+                directory=f'{self.__source}',
+                file = "Dockerfile.manager",
+                build_args={
+                    "STAGE": manager,
+                },
+                asset_name= f'{self.__prefix}-docker-manager-{manager}'
+            ),
             timeout       = Duration.minutes(15),
+            architecture  = aws_lambda.Architecture.X86_64,
             memory_size   = 3000,
-            environment   = environment,
+            environment   = environment
         )
-
-        for dependency_layer in self.__layers :
-            lambda_function.add_layers(dependency_layer)
 
         return lambda_function

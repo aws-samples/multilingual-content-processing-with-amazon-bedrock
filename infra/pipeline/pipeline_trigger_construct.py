@@ -8,6 +8,7 @@ from aws_cdk import (
     aws_lambda, aws_s3, aws_iam, aws_s3_notifications, Duration, 
     CustomResource
 )
+from aws_cdk.aws_ecr_assets import DockerImageAsset
 
 from constructs import Construct
 from aws_cdk.custom_resources import (
@@ -23,7 +24,6 @@ class PipelineTriggerConstruct(Construct):
         scope  : Construct,
         id     : str,
         prefix : str,
-        layers : List[aws_lambda.LayerVersion],
         source : Path,
         common : dict,
         bucket : aws_s3.Bucket = None,
@@ -34,7 +34,6 @@ class PipelineTriggerConstruct(Construct):
 
         self.__scope  = scope
         self.__prefix = prefix
-        self.__layers = layers
         self.__source = source
         self.__common = common
         self.__bucket = bucket
@@ -90,7 +89,7 @@ class PipelineTriggerConstruct(Construct):
             function_name = f'{self.__prefix}-creator-trigger-s3',
             code          = aws_lambda.Code.from_asset(lambda_path),
             handler       = 's3_trigger_manager.lambda_handler',
-            runtime       = aws_lambda.Runtime.PYTHON_3_8,
+            runtime       = aws_lambda.Runtime.PYTHON_3_10,
             timeout       = Duration.minutes(15),
             memory_size   = 3000,
             role          = lambda_role,
@@ -115,19 +114,24 @@ class PipelineTriggerConstruct(Construct):
         environment = dict(self.__common)
         environment.update(environ)
 
-        lambda_function = aws_lambda.Function(
+
+        lambda_function = aws_lambda.DockerImageFunction(
             scope         = self.__scope,
             id            = f'{self.__prefix}-trigger-{trigger}',
             function_name = f'{self.__prefix}-trigger-{trigger}',
-            code          = aws_lambda.Code.from_asset(f'{self.__source}/trigger/{trigger}'),
-            handler       = 'handler.lambda_handler',
-            runtime       = aws_lambda.Runtime.PYTHON_3_8,
+            code          = aws_lambda.DockerImageCode.from_image_asset(
+                directory=f'{self.__source}',
+                file = "Dockerfile.trigger",
+                build_args={
+                    "STAGE": f'{trigger}'
+                },
+                asset_name= f'{self.__prefix}-docker-trigger-{trigger}'
+            ),
             timeout       = Duration.minutes(15),
+            architecture  = aws_lambda.Architecture.X86_64,
             memory_size   = 3000,
-            environment   = environment,
+            environment   = environment
         )
 
-        for dependency_layer in self.__layers:
-            lambda_function.add_layers(dependency_layer)
 
         return lambda_function

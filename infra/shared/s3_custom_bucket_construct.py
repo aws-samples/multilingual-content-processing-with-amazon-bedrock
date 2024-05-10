@@ -31,7 +31,7 @@ class S3CustomBucketConstruct(aws_s3.Bucket):
                 function_name = f'{bucket_name}-object-remover'[1:20],
                 code          = aws_lambda.Code.from_asset(lambda_path),
                 handler       = 's3_custom_bucket_manager.lambda_handler',
-                runtime       = aws_lambda.Runtime.PYTHON_3_8,
+                runtime       = aws_lambda.Runtime.PYTHON_3_10,
                 timeout       = Duration.minutes(15),
                 memory_size   = 3000
             )

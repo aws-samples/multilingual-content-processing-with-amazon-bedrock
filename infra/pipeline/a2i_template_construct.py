@@ -55,7 +55,7 @@ class A2ITemplateConstruct(Construct):
             function_name = f'{self.__prefix}-creator-template',
             code          = aws_lambda.Code.from_asset(lambda_path),
             handler       = 'a2i_template_manager.lambda_handler',
-            runtime       = aws_lambda.Runtime.PYTHON_3_8,
+            runtime       = aws_lambda.Runtime.PYTHON_3_10,
             timeout       = Duration.minutes(15),
             memory_size   = 3000,
             role          = lambda_role,

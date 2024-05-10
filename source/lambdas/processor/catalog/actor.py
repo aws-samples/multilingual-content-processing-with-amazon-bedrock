@@ -14,9 +14,16 @@ from utils import ExcelHelper
 
 def lambda_handler(event, context):
     
+    print('lambda executed')
+
     helper   = ExcelHelper()
+    print('Excel helper loaded')
+    print('event: ', event)
     document = Document.from_dict(event)
     message  = Message(document.DocumentID)
+
+    print('document: ', document)
+    print('message: ', message)
 
 
     message.DocumentID            = document.DocumentID

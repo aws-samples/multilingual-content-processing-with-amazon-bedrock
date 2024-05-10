@@ -5,7 +5,7 @@ from shared.database import Database
 from shared.defines import Stage
 
 STAGE_TRANSITIONS_ORDER = [
-                            Stage.CLASSIFY,
+                            # Stage.CLASSIFY,
                         #    Stage.ACQUIRE,
                         #    Stage.CONVERT,
                             Stage.EXTRACT,

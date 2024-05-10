@@ -21,11 +21,15 @@ def lambda_handler(event, context):
 
     Logger.info(f'{STAGE} Actor : Started Processing DocumentID = {document.DocumentID}')
     
+    documentName = document.ExtractMap.StageS3Uri.Prefix.split('.')[0]
+    print('documentName', documentName)
     
-    sourceS3Uri = S3Uri(Bucket = STORE_BUCKET, Object = f'{document.ExtractMap.StageS3Uri.Prefix}.json')
+    sourceS3Uri = S3Uri(Bucket = STORE_BUCKET, Object = f'{documentName}.json')
     outputS3Uri = S3Uri(Bucket = STORE_BUCKET, Object = f'{STAGE}/{document.DocumentID}/humanInTheLoop-Operated.json')
 
     try:
+
+        print('sourceS3Uri: ', sourceS3Uri.Url)
 
         hil_document = sourceS3Uri.GetJSON()
         hil_document = convert_to_textract_format(hil_document, document.DocumentID)
@@ -57,6 +61,26 @@ def lambda_handler(event, context):
 
     Bus.PutMessage(stage = STAGE, message_body = message.to_json())
 
+def flatten_json(nested_json, parent_key='', sep='_'):
+    """
+    Flattens a nested json file so that nested keys are collapsed into a single key.
+    For example, the nested key 'contact' having 'phone' will become 'contact_phone'.
+
+    :param nested_json: A nested json object.
+    :param parent_key: The base key from which keys will be built.
+    :param sep: Separator between nested keys.
+    :return: A new dictionary with flattened keys and values.
+    """
+    items = []
+    for key, value in nested_json.items():
+        new_key = f"{parent_key}{sep}{key}" if parent_key else key
+        if isinstance(value, dict):
+            items.extend(flatten_json(value, new_key, sep=sep).items())
+        else:
+            items.append((new_key, value))
+    return dict(items)
+
+
 def convert_to_textract_format(doc, doc_id):
     output_data = {
         "numPages": 1,
@@ -68,11 +92,13 @@ def convert_to_textract_format(doc, doc_id):
         ],
         "tableTypes":[],
         "metadata": {
-            "sourceDocumentUrl": f's3://{STORE_BUCKET}/acquire/{doc_id}.png'
+            "sourceDocumentUrl": f's3://{STORE_BUCKET}/acquire/{doc_id}'
         }
     }
 
     attributes = {}
+
+    doc = flatten_json(doc, parent_key='', sep='_')
 
     for key, val in doc.items():
         if isinstance(val, dict):

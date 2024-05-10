@@ -4,11 +4,16 @@
 from typing  import List
 from pathlib import Path
 from boto3   import client
+import os
+import subprocess
 
 from aws_cdk import (
-    aws_sqs, aws_lambda, aws_sns, aws_sns_subscriptions, aws_iam, aws_events, 
-    aws_events_targets, Aws, Duration
+    aws_sqs, aws_lambda, aws_sns, aws_iam, aws_events, 
+    aws_events_targets, Aws, Duration,  aws_iam as iam
 )
+
+from aws_cdk.aws_ecr_assets import DockerImageAsset
+
 from constructs import Construct
 
 from .a2i_workflow_construct import A2IWorkflowConstruct
@@ -37,7 +42,6 @@ class PipelineProcessConstruct(Construct):
         id     : str,
         prefix : str,
         common : dict,
-        layers : List[aws_lambda.LayerVersion],
         source : Path,
         liquid,
         bucket,
@@ -51,7 +55,6 @@ class PipelineProcessConstruct(Construct):
 
         self.__common = common
         self.__source = source
-        self.__layers = layers
         self.__bucket = bucket
         self.__liquid = liquid
 
@@ -62,7 +65,7 @@ class PipelineProcessConstruct(Construct):
         self.__stage_await_lambdas = {}
 
         
-        self.__create_stage_classify(stage = Process.CLASSIFY)
+        # self.__create_stage_classify(stage = Process.CLASSIFY)
         self.__create_stage_extract(stage = Process.EXTRACT)
         self.__create_stage_operate(stage = Process.OPERATE)
         self.__create_stage_augment(stage = Process.AUGMENT)
@@ -231,6 +234,11 @@ class PipelineProcessConstruct(Construct):
         self.__create_begin_lambda(stage, queue)
         self.__create_await_lambda(stage, queue)
    
+        self.__srole_bedrock = aws_iam.Role(
+            scope      = self,
+            id         = f'{self.__prefix}-srole-bedrock',
+            assumed_by = aws_iam.ServicePrincipal('bedrock.amazonaws.com') 
+        )
         
         self.__srole_bedrock.grant_pass_role(self.__stage_actor_lambdas[Process.EXTRACT])
 
@@ -285,10 +293,10 @@ class PipelineProcessConstruct(Construct):
 
         actor = self.__stage_actor_lambdas[stage]
 
+
         environ = {
             'STAGE'       : stage,
             'STAGE_QUEUE' : queue.queue_name,
-            'STAGE_ACTOR' : actor.function_name,
         }
 
         lambda_function = self.__create_lambda_function(stage, Aspect.BEGIN, environ)
@@ -326,24 +334,64 @@ class PipelineProcessConstruct(Construct):
 
         self.__stage_await_lambdas[stage] = lambda_function
 
+
+    def __package_dependencies(self, source_directory):
+        requirements_path = os.path.join(source_directory, 'requirements.txt')
+        if not os.path.exists(requirements_path):
+            return source_directory  # No requirements.txt found, return original source directory
+
+        # Directory to store packaged code
+        deployment_dir = os.path.join(source_directory, 'deployment')
+        os.makedirs(deployment_dir, exist_ok=True)
+
+        # Install packages into the deployment directory
+        subprocess.check_call(
+            [f'pip install -r {requirements_path} -t {deployment_dir}'],
+            shell=True
+        )
+
+        # Copy lambda function code into the deployment directory
+        subprocess.check_call(
+            [f'cp -r {source_directory}/* {deployment_dir}'],
+            shell=True
+        )
+
+        return deployment_dir
+
+
     def __create_lambda_function(self, stage, aspect, environ):
 
         environment = self.__common.copy()
         environment.update(environ)
 
-        lambda_function = aws_lambda.Function(
+        # docker_image = DockerImageAsset(self, f'{self.__prefix}-docker-{stage}-{aspect}',
+        #     directory=f'{self.__source}',
+        #     build_args={
+        #         "STAGE": stage,
+        #         "ASPECT": aspect,
+        #     })
+        
+
+
+        source_directory = f'{self.__source}/processor/{stage}'
+        # packaged_source = self.__package_dependencies(source_directory)
+
+        lambda_function = aws_lambda.DockerImageFunction(
             scope         = self.__scope,
             id            = f'{self.__prefix}-processor-{stage}-{aspect}',
             function_name = f'{self.__prefix}-processor-{stage}-{aspect}',
-            code          = aws_lambda.Code.from_asset(f'{self.__source}/processor/{stage}'),
-            handler       = f'{aspect}.lambda_handler',
-            runtime       = aws_lambda.Runtime.PYTHON_3_8,
+            code          = aws_lambda.DockerImageCode.from_image_asset(
+                directory=f'{self.__source}',
+                build_args={
+                    "STAGE": stage,
+                    "ASPECT": aspect,
+                },
+                asset_name = f'{self.__prefix}-docker-{stage}-{aspect}'
+            ),
             timeout       = Duration.minutes(15),
+            architecture  = aws_lambda.Architecture.X86_64,
             memory_size   = 3000,
             environment   = environment
         )
-
-        for dependency_layer in self.__layers :
-            lambda_function.add_layers(dependency_layer)
 
         return lambda_function

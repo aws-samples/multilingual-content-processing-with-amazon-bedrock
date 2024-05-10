@@ -52,7 +52,7 @@ class A2IWorkflowConstruct(Construct):
             function_name = f'{self.__prefix}-creator-workflow-{workflow_name}',
             code          = aws_lambda.Code.from_asset(lambda_path),
             handler       = 'a2i_workflow_manager.lambda_handler',
-            runtime       = aws_lambda.Runtime.PYTHON_3_8,
+            runtime       = aws_lambda.Runtime.PYTHON_3_10,
             timeout       = Duration.minutes(15),
             memory_size   = 3000,
             role          = self.__get_custom_resource_creation_iam_role()

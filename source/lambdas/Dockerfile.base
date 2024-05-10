@@ -1,0 +1,15 @@
+# Use the official AWS Lambda Python runtime as a parent image
+FROM public.ecr.aws/lambda/python:3.12-x86_64
+
+RUN /var/lang/bin/python -m pip install --upgrade pip
+
+# Copy the requirements file
+COPY requirements.txt /tmp/
+
+# Install dependencies
+RUN python -m pip install -r /tmp/requirements.txt --target "${LAMBDA_TASK_ROOT}"
+
+COPY shared/ ${LAMBDA_TASK_ROOT}/shared
+
+# Set up a directory for application code
+WORKDIR ${LAMBDA_TASK_ROOT}

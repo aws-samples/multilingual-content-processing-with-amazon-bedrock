@@ -40,7 +40,7 @@ class AugmentBeginProcessor(BeginProcessor):
             document.CurrentMap.StageS3Uri = S3Uri(Bucket = STORE_BUCKET, Prefix = f'{STAGE}/.a2i/{flowDefinition}')
 
             humanLoopTime = Sanatize(GetCurrentStamp())
-            humanLoopID   = Sanatize(document.DocumentID)
+            humanLoopID   = Sanatize(document.DocumentID.replace('.', '-'))
             humanLoopName = Sanatize(f'{flowName}--{humanLoopID}--{humanLoopTime}').lower()
 
             sourceS3Uri = S3Uri(Bucket = STORE_BUCKET, Object = document.OperateMap.StageS3Uri.Object)

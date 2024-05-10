@@ -31,8 +31,10 @@ class AugmentAwaitProcessor(AwaitProcessor):
             message                        = DotMap(**loads(wrapper.body))
             message.detail                 = DotMap(**message.detail)
             message.detail.humanLoopOutput = DotMap(**message.detail.humanLoopOutput)
-            message.documentID             = message.detail.humanLoopName.split('--')[1]
+            message.documentID             = message.detail.humanLoopName.split('--')[1].replace('-', '.')
             document                       = Database.GetDocument(document_id = message.documentID)
+
+            print("message: ", message)
 
             if not document:
 

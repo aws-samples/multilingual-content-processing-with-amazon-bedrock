@@ -9,6 +9,7 @@ from aws_cdk import (
 
 from constructs import Construct
 from pathlib import Path
+import docker
 
 from .pipeline.pipeline_process_construct import PipelineProcessConstruct
 from .pipeline.pipeline_manager_construct import PipelineManagerConstruct
@@ -56,40 +57,46 @@ class PipelineStack(Stack):
             ]
         )
 
-        shared_bundler = BundlingOptions(
-            image   = DockerImage.from_registry(image="lambci/lambda:build-python3.8"),
-            user    = 'root',
-            command =
-            [
-                'bash',
-                '-c',
-                '&&'.join(
-                    [
-                        'mkdir /asset-output/python',
-                        'mkdir /asset-output/python/shared',
-                        'cp -r shared /asset-output/python',
-                        'pip install -r requirements.txt -t /asset-output/python',
-                    ],
-                ),
-            ],
-        )
-
-        shared_layer = aws_lambda.LayerVersion(
-            scope = self,
-            id    = 'shared',
-            code  = aws_lambda.AssetCode(
-                path     = str(self.__source),
-                bundling = shared_bundler,
-              # this prevents re-running asset bundling when non-shared directory
-              # changes are made, speeding up deployment.
-              # exclude  = ['manager', 'processor', 'trigger'],
-            ),
-            compatible_runtimes = [aws_lambda.Runtime.PYTHON_3_8],
-        )
-
-        self.__layers = [shared_layer]
+        
+        base_image_dockerfile =  "Dockerfile.base"
+        base_image_path       = str(self.__source)
+        base_image_tag        =  "lambdabase:latest"
+        base_docker_image     = self.__build_docker_image(base_image_path, base_image_dockerfile, base_image_tag)
 
         self.__create_pipeline()
+
+    def __build_docker_image(self, path, dockerfile, tag):
+        """
+        Build a Docker image from a Dockerfile.
+        
+        Args:
+            path (str): Path to the directory containing the Dockerfile.
+            tag (str): Tag to give to the built image.
+        
+        Returns:
+            image: The built image object if successful.
+        """
+        print(f"Building Docker image '{tag}' from Dockerfile at '{path}'...")
+
+        client = docker.from_env()
+
+        try:
+            # Build the image
+            image, build_log = client.images.build(path=path, tag=tag, dockerfile=dockerfile, rm=True)
+            
+            # Optionally, print build logs
+            for log in build_log:
+                if 'stream' in log:
+                    print(log['stream'].strip())
+            
+            print(f"Image built successfully: {image.tags}")
+            return image
+        except docker.errors.BuildError as e:
+            print(f"Failed to build image: {e.msg}")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
+
 
     def __create_pipeline(self):
 
@@ -135,7 +142,6 @@ class PipelineStack(Stack):
             id     = f'{self.__prefix}-pipeline-process',
             prefix = self.__prefix,
             common = self.__common_variables,
-            layers = self.__layers,
             source = self.__source,
             bucket = self.__tdd_store_document,
             liquid = self.__liquid
@@ -146,7 +152,6 @@ class PipelineStack(Stack):
             scope  = self,
             id     = f'{self.__prefix}-pipeline-manager',
             prefix = self.__prefix,
-            layers = self.__layers,
             source = self.__source,
             common = self.__common_variables
         )
@@ -156,7 +161,6 @@ class PipelineStack(Stack):
             scope  = self,
             id     = f'{self.__prefix}-pipeline-trigger',
             prefix = self.__prefix,
-            layers = self.__layers,
             source = self.__source,
             common = self.__common_variables,
             bucket = self.__bucket

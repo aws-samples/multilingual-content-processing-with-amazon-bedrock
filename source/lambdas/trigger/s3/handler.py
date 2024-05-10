@@ -36,13 +36,15 @@ def ingestDocumentFromS3(notification):
     object       = notification['s3']['object']['key']
     create_stamp = notification['eventTime']
     priority     = object.split('/')[1] if object.count('/') > 1 else '0' # initial priority
-    document_id  = splitext(object.split('/')[-1])[0]
+    # document_id  = splitext(object.split('/')[-1])[0]
+    document_id  = object.split('/')[-1]
+    print('document_id', document_id)
 
    #"<bucket>/acquire/<initial_priority>/<document_id>.pdf"
     
     document = Document(DocumentID = document_id)
 
-    document.Stage = Stage.CLASSIFY
+    document.Stage = Stage.EXTRACT
     document.State = State.WAITING
     document.Order = priority
     document.Stamp = create_stamp
