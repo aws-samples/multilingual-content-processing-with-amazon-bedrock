@@ -1,0 +1,134 @@
+{
+    "lang_code": "hr",
+    "labels": {
+        "title": "Račun",
+        "invoice_number": "Broj Računa",
+        "created_date": "Datum Isporuke",
+        "due_date": "Datum Dospiјeća",
+        "product_id": "Šifra",
+        "item": "Naziv Robe",
+        "price": "Cijena",
+        "discount": "Rab %",
+        "discounted_price": "Cijena Nakon Rab",
+        "line_item_total": "Vrijednost",
+        "tax_rate": "PDV %",
+        "value_of_goods": "Prodajna Vrijednost",
+        "quantity": "Količina",
+        "identifier": "OIB",
+        "tax": "Porez",
+        "total": "Ukupno"
+    },
+    "company": {
+        "name": "AWSomecompany",
+        "address": "DOMOVINSKOG RATA 1/B, 21210 Solin",
+        "iban": "HR9746102382007489622",
+        "logo": "/Users/mestroma/projects/multilingual-content-processing/invoice_generator/templates/logo.png",
+        "footer": "Hvala na povjerenju!"
+    },
+    "customer": {
+        "name": "Anycompany",
+        "address": "Put Duilova 8/B, 21000 Split",
+        "identifier": "58432790126"
+    },
+    "invoice": {
+        "number": "1006/V01/17",
+        "date": "05.06.24",
+        "due_date": "05.06.24",
+        "value_of_goods": 7082.26,
+        "discount": 39.59,
+        "tax": 751.97,
+        "total": 939.96
+    },
+    "line_items": [
+        {
+            "product_id": "239874",
+            "description": "Usluga konzultacija",
+            "price": 1000.00,
+            "quantity": 1,
+            "discount": 10,
+            "discounted_price": 900.00,
+            "tax_rate": 25,
+            "total": 1125.00
+        },
+        {
+            "product_id": "685391",
+            "description": "Računalo Dell Inspiron",
+            "price": 4500.00,
+            "quantity": 2,
+            "discount": 5,
+            "discounted_price": 4275.00,
+            "tax_rate": 25,
+            "total": 10687.50
+        },
+        {
+            "product_id": "472159",
+            "description": "Toner za printer HP",
+            "price": 750.00,
+            "quantity": 3,
+            "discount": 5,
+            "discounted_price": 712.50,
+            "tax_rate": 25,
+            "total": 2671.88
+        },
+        {
+            "product_id": "382475",
+            "description": "Monitor LG 24\"",
+            "price": 1200.00,
+            "quantity": 2,
+            "discount": 10,
+            "discounted_price": 1080.00,
+            "tax_rate": 25,
+            "total": 2700.00
+        },
+        {
+            "product_id": "492836",
+            "description": "Tipkovnica Logitech K120",
+            "price": 150.00,
+            "quantity": 5,
+            "discount": 5,
+            "discounted_price": 142.50,
+            "tax_rate": 25,
+            "total": 893.75
+        },
+        {
+            "product_id": "592837",
+            "description": "Miš Logitech M185",
+            "price": 100.00,
+            "quantity": 4,
+            "discount": 5,
+            "discounted_price": 95.00,
+            "tax_rate": 25,
+            "total": 475.00
+        },
+        {
+            "product_id": "982475",
+            "description": "Pisač Canon PIXMA",
+            "price": 600.00,
+            "quantity": 1,
+            "discount": 5,
+            "discounted_price": 570.00,
+            "tax_rate": 25,
+            "total": 712.50
+        },
+        {
+            "product_id": "782639",
+            "description": "USB Flash Drive 64GB",
+            "price": 80.00,
+            "quantity": 10,
+            "discount": 10,
+            "discounted_price": 72.00,
+            "tax_rate": 25,
+            "total": 900.00
+        },
+        {
+            "product_id": "891234",
+            "description": "Papir za ispis A4",
+            "price": 25.00,
+            "quantity": 20,
+            "discount": 5,
+            "discounted_price": 23.75,
+            "tax_rate": 25,
+            "total": 593.75
+        }
+    ]
+}

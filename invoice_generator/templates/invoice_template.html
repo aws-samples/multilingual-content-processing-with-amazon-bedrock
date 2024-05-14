@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="{{ lang_code }}">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ labels.title }}</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            font-size: 14px;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .invoice-box {
+            max-width: 800px;
+            margin: 0px auto;
+            padding: 30px;
+            border: 1px solid #eee;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            background-color: #fff;
+        }
+        .invoice-box table {
+            width: 100%;
+            line-height: inherit;
+            text-align: left;
+            border-collapse: collapse;
+        }
+        .invoice-box table td, .invoice-box table th {
+            padding: 8px;
+            vertical-align: top;
+        }
+        .invoice-box table th {
+            background-color: #eee;
+            font-weight: bold;
+            border-bottom: 1px solid #ddd;
+        }
+        .invoice-box table tr.heading td {
+            background: #eee;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+        }
+        .invoice-box table tr.item td {
+            border-bottom: 1px solid #eee;
+        }
+        .invoice-box table tr.item.last td {
+            border-bottom: none;
+        }
+        .invoice-box table tr.total td {
+            border-top: 2px solid #eee;
+            font-weight: bold;
+        }
+        .invoice-box table tr.summary td {
+            font-weight: bold;
+        }
+        .invoice-box .footer {
+            margin-top: 20px;
+            font-size: smaller;
+            text-align: center;
+            color: #777;
+        }
+        .top-table td {
+            padding-bottom: 20px;
+        }
+        .text-right {
+            text-align: right;
+        }
+        .full-width {
+            width: 100%;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 50px;
+        }
+        .information {
+            padding-bottom: 50px;
+        }
+        .header img {
+            max-width: 150px;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-box">
+        <div class="header">
+            <div class="logo">
+                <img src="{{ company.logo }}" alt="Company Logo">
+            </div>
+            <div class="invoice-details text-right">
+                <strong>{{ labels.invoice_number }}:</strong> {{ invoice.number }}<br>
+                <strong>{{ labels.created_date }}:</strong> {{ invoice.date }}<br>
+                <strong>{{ labels.due_date }}:</strong> {{ invoice.due_date }}
+            </div>
+        </div>
+        <div class="information">
+            <table class="full-width">
+                <tr>
+                    <td>
+                        {{ company.name }}<br>
+                        {{ company.address }}<br>
+                        <strong>IBAN:</strong> {{ company.iban }}
+                    </td>
+                    <td class="text-right">
+                        {{ customer.name }}<br>
+                        {{ customer.address }}<br>
+                        <strong>{{ labels.identifier }}:</strong> {{ customer.identifier }}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <table>
+            <tr class="heading">
+                <td>{{ labels.product_id }}</td>
+                <td>{{ labels.item }}</td>
+                <td class="text-right">{{ labels.price }}</td>
+                <td class="text-right">{{ labels.quantity }}</td>
+                <td class="text-right">{{ labels.discount }}</td>
+                <td class="text-right">{{ labels.discounted_price }}</td>
+                <td class="text-right">{{ labels.tax_rate }}</td>
+                <td class="text-right">{{ labels.line_item_total }}</td>
+            </tr>
+            
+            {% for item in line_items %}
+            <tr class="item{% if loop.last %} last{% endif %}">
+                <td>{{ item.product_id }}</td>
+                <td>{{ item.description }}</td>
+                <td class="text-right">{{ item.price }}</td>
+                <td class="text-right">{{ item.quantity }}</td>
+                <td class="text-right">{{ item.discount }}</td>
+                <td class="text-right">{{ item.discounted_price }}</td>
+                <td class="text-right">{{ item.tax_rate }}</td>
+                <td class="text-right">{{ item.total }}</td>
+            </tr>
+            {% endfor %}
+            
+            <tr class="total">
+                <td colspan="7" class="text-right">
+                    <strong>{{ labels.value_of_goods }}:</strong>
+                </td>
+                <td class="text-right">
+                    <strong>{{ invoice.value_of_goods }}</strong>
+                </td>
+            </tr>
+            <tr class="summary">
+                <td colspan="7" class="text-right">
+                    <strong>{{ labels.discount }}:</strong>
+                </td>
+                <td class="text-right">
+                    <strong>{{ invoice.discount }}</strong>
+                </td>
+            </tr>
+            <tr class="summary">
+                <td colspan="7" class="text-right">
+                    <strong>{{ labels.tax }}:</strong>
+                </td>
+                <td class="text-right">
+                    <strong>{{ invoice.tax }}</strong>
+                </td>
+            </tr>
+            <tr class="summary">
+                <td colspan="7" class="text-right">
+                    <strong>{{ labels.total }}:</strong>
+                </td>
+                <td class="text-right">
+                    <strong>{{ invoice.total }}</strong>
+                </td>
+            </tr>  
+        </table>
+
+        <div class="footer">
+            {{ company.footer }}
+        </div>
+    </div>
+</body>
+</html>

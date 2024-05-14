@@ -1,0 +1,134 @@
+{
+    "lang_code": "zh",
+    "labels": {
+        "title": "发票",
+        "invoice_number": "发票编号",
+        "created_date": "开票日期",
+        "due_date": "到期日期",
+        "product_id": "产品编号",
+        "item": "商品名称",
+        "price": "价格",
+        "discount": "折扣 %",
+        "discounted_price": "折扣后价格",
+        "line_item_total": "总金额",
+        "tax_rate": "税率 %",
+        "value_of_goods": "商品价值",
+        "quantity": "数量",
+        "identifier": "税号",
+        "tax": "税款",
+        "total": "总计"
+    },
+    "company": {
+        "name": "AWSomecompany",
+        "address": "北京市朝阳区望京街道1号",
+        "iban": "CN1234567890123456789",
+        "logo": "/Users/mestroma/projects/multilingual-content-processing/invoice_generator/templates/logo.png",
+        "footer": "感谢您的信任！"
+    },
+    "customer": {
+        "name": "Anycompany",
+        "address": "上海市浦东新区世纪大道8号",
+        "identifier": "58432790126"
+    },
+    "invoice": {
+        "number": "1006/V01/17",
+        "date": "2024-06-05",
+        "due_date": "2024-06-05",
+        "value_of_goods": 7082.26,
+        "discount": 39.59,
+        "tax": 751.97,
+        "total": 939.96
+    },
+    "line_items": [
+        {
+            "product_id": "239874",
+            "description": "咨询服务",
+            "price": 1000.00,
+            "quantity": 1,
+            "discount": 10,
+            "discounted_price": 900.00,
+            "tax_rate": 25,
+            "total": 1125.00
+        },
+        {
+            "product_id": "685391",
+            "description": "戴尔Inspiron电脑",
+            "price": 4500.00,
+            "quantity": 2,
+            "discount": 5,
+            "discounted_price": 4275.00,
+            "tax_rate": 25,
+            "total": 10687.50
+        },
+        {
+            "product_id": "472159",
+            "description": "惠普打印机墨盒",
+            "price": 750.00,
+            "quantity": 3,
+            "discount": 5,
+            "discounted_price": 712.50,
+            "tax_rate": 25,
+            "total": 2671.88
+        },
+        {
+            "product_id": "382475",
+            "description": "LG 24\"显示器",
+            "price": 1200.00,
+            "quantity": 2,
+            "discount": 10,
+            "discounted_price": 1080.00,
+            "tax_rate": 25,
+            "total": 2700.00
+        },
+        {
+            "product_id": "492836",
+            "description": "罗技K120键盘",
+            "price": 150.00,
+            "quantity": 5,
+            "discount": 5,
+            "discounted_price": 142.50,
+            "tax_rate": 25,
+            "total": 893.75
+        },
+        {
+            "product_id": "592837",
+            "description": "罗技M185鼠标",
+            "price": 100.00,
+            "quantity": 4,
+            "discount": 5,
+            "discounted_price": 95.00,
+            "tax_rate": 25,
+            "total": 475.00
+        },
+        {
+            "product_id": "982475",
+            "description": "佳能PIXMA打印机",
+            "price": 600.00,
+            "quantity": 1,
+            "discount": 5,
+            "discounted_price": 570.00,
+            "tax_rate": 25,
+            "total": 712.50
+        },
+        {
+            "product_id": "782639",
+            "description": "64GB USB闪存盘",
+            "price": 80.00,
+            "quantity": 10,
+            "discount": 10,
+            "discounted_price": 72.00,
+            "tax_rate": 25,
+            "total": 900.00
+        },
+        {
+            "product_id": "891234",
+            "description": "A4打印纸",
+            "price": 25.00,
+            "quantity": 20,
+            "discount": 5,
+            "discounted_price": 23.75,
+            "tax_rate": 25,
+            "total": 593.75
+        }
+    ]
+}

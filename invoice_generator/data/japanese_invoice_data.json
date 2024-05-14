@@ -1,0 +1,134 @@
+{
+    "lang_code": "ja",
+    "labels": {
+        "title": "請求書",
+        "invoice_number": "請求書番号",
+        "created_date": "作成日",
+        "due_date": "支払期限日",
+        "product_id": "製品番号",
+        "item": "商品名",
+        "price": "価格",
+        "discount": "割引 %",
+        "discounted_price": "割引後の価格",
+        "line_item_total": "合計金額",
+        "tax_rate": "税率 %",
+        "value_of_goods": "商品価値",
+        "quantity": "数量",
+        "identifier": "税番号",
+        "tax": "税金",
+        "total": "総計"
+    },
+    "company": {
+        "name": "AWSomecompany",
+        "address": "東京都千代田区丸の内1-1-1",
+        "iban": "JP1234567890123456789",
+        "logo": "/Users/mestroma/projects/multilingual-content-processing/invoice_generator/templates/logo.png",
+        "footer": "ご利用いただきありがとうございます！"
+    },
+    "customer": {
+        "name": "Anycompany",
+        "address": "大阪府大阪市北区梅田2-2-2",
+        "identifier": "58432790126"
+    },
+    "invoice": {
+        "number": "1006/V01/17",
+        "date": "2024-06-05",
+        "due_date": "2024-06-05",
+        "value_of_goods": 7082.26,
+        "discount": 39.59,
+        "tax": 751.97,
+        "total": 939.96
+    },
+    "line_items": [
+        {
+            "product_id": "239874",
+            "description": "コンサルティングサービス",
+            "price": 1000.00,
+            "quantity": 1,
+            "discount": 10,
+            "discounted_price": 900.00,
+            "tax_rate": 25,
+            "total": 1125.00
+        },
+        {
+            "product_id": "685391",
+            "description": "デルInspironコンピューター",
+            "price": 4500.00,
+            "quantity": 2,
+            "discount": 5,
+            "discounted_price": 4275.00,
+            "tax_rate": 25,
+            "total": 10687.50
+        },
+        {
+            "product_id": "472159",
+            "description": "HPプリンタートナー",
+            "price": 750.00,
+            "quantity": 3,
+            "discount": 5,
+            "discounted_price": 712.50,
+            "tax_rate": 25,
+            "total": 2671.88
+        },
+        {
+            "product_id": "382475",
+            "description": "LG 24\"モニター",
+            "price": 1200.00,
+            "quantity": 2,
+            "discount": 10,
+            "discounted_price": 1080.00,
+            "tax_rate": 25,
+            "total": 2700.00
+        },
+        {
+            "product_id": "492836",
+            "description": "ロジテックK120キーボード",
+            "price": 150.00,
+            "quantity": 5,
+            "discount": 5,
+            "discounted_price": 142.50,
+            "tax_rate": 25,
+            "total": 893.75
+        },
+        {
+            "product_id": "592837",
+            "description": "ロジテックM185マウス",
+            "price": 100.00,
+            "quantity": 4,
+            "discount": 5,
+            "discounted_price": 95.00,
+            "tax_rate": 25,
+            "total": 475.00
+        },
+        {
+            "product_id": "982475",
+            "description": "キャノンPIXMAプリンター",
+            "price": 600.00,
+            "quantity": 1,
+            "discount": 5,
+            "discounted_price": 570.00,
+            "tax_rate": 25,
+            "total": 712.50
+        },
+        {
+            "product_id": "782639",
+            "description": "64GB USBフラッシュドライブ",
+            "price": 80.00,
+            "quantity": 10,
+            "discount": 10,
+            "discounted_price": 72.00,
+            "tax_rate": 25,
+            "total": 900.00
+        },
+        {
+            "product_id": "891234",
+            "description": "A4印刷用紙",
+            "price": 25.00,
+            "quantity": 20,
+            "discount": 5,
+            "discounted_price": 23.75,
+            "tax_rate": 25,
+            "total": 593.75
+        }
+    ]
+}
