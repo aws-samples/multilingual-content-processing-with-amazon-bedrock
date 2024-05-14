@@ -15,3 +15,5 @@ pytz
 uuid
 pyrhubarb
 docker
+jinja2
+weasyprint
