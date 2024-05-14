@@ -373,8 +373,6 @@ class PipelineProcessConstruct(Construct):
         
 
 
-        source_directory = f'{self.__source}/processor/{stage}'
-        # packaged_source = self.__package_dependencies(source_directory)
 
         lambda_function = aws_lambda.DockerImageFunction(
             scope         = self.__scope,
