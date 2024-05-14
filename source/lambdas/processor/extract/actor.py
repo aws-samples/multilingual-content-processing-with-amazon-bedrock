@@ -30,100 +30,8 @@ class ProcessImage():
     def generateJson(self, document: Document):
         try:
 
-            document.CurrentMap.StageS3Uri = S3Uri(Bucket=STORE_BUCKET, Prefix=f'acquire/{document.DocumentID}')
-            response = S3Client.get_object(Bucket=STORE_BUCKET, Key=f'acquire/{document.DocumentID}')
-            
+            document.CurrentMap.StageS3Uri = S3Uri(Bucket=STORE_BUCKET, Prefix=f'acquire/{document.DocumentID}')            
             session = boto3.Session()
-
-            image_content = response['Body'].read()
-            image_base64 = base64.b64encode(image_content)
-            base64_string = image_base64.decode('utf-8')
-        
-            table_format_prompt = '''
-            Here's a formalized prompt combining all the instructions:
-
-            Objective:
-            You are tasked with crafting a detailed and highly specific instruction set for a Language Model (LLM) that functions like an Optical Character Recognition (OCR) system. 
-            åThe goal is to enable the model to accurately and comprehensively extract data from images.
-
-            Guidelines for Writing the Prompt:
-
-            1. Specify the Desired Data Points:
-            Enumerate each category of data that needs to be extracted from the image, such as company names, comopany role in the context of the image for example supplier or buyer,  transaction dates, financial amounts, product or service descriptions, and any identifiers like invoice numbers.
-            
-            2. Detail the Structure and Format:
-            Describe the common layout found on typical documents of this type. Include details about the presence of headers, tables, lists, or footnotes which might contain relevant information, guiding the model on where to focus within the document.
-            
-            3. Highlight Common Challenges and Solutions:
-            Acknowledge potential OCR challenges such as text alignment, fonts, and character recognition errors. Provide guidelines on how to address these issues to improve data extraction accuracy.
-
-            4. Define the Output Format:
-            - Direct the model to structure the output in a JSON format, adhering to JSON Schema Draft 7 standards to ensure compatibility and ease of integration with downstream systems.
-            - Do not use nested structures, flatten nested structures to facilitate easier data handling and analysis. For instance, convert { "contact": {"phone": "string", "email": "string"}} to {"contact_phone": "string", "contact_email": "string"}.
-            
-            Incorporate Examples:
-            Include examples of both the input and the desired output. This will help the model better understand the task and the expected results.
-            
-            Use Descriptive Language:
-            Use precise and descriptive language to eliminate ambiguity. Ensure that the instructions are thorough and detailed enough to guide the model without any additional human clarification.
-
-            Example Prompt:
-            `Please extract all textual and numerical data from the provided image of an invoice. Required data includes the issuer's details (name, address, contact), 
-            each item's description, quantity, unit price, total item price, the invoice number, date of issue, and total amount due. 
-            Organize each piece of data according to its appearance in the invoice, such as header information, table entries, and footer details. 
-            Present the extracted data in a structured JSON format, ensuring each element is clearly categorized and formatted as outlined.`
-
-            Output Instructions:
-            Ensure the output strictly contains the generated prompt based on these instructions, with no additional text or commentary.
-
-            '''
-            
-            payload = {
-                "modelId": "anthropic.claude-3-sonnet-20240229-v1:0",
-                "contentType": "application/json",
-                "accept": "application/json",
-                "body": {
-                    "anthropic_version": "bedrock-2023-05-31",
-                    "temperature": 0,
-                    "max_tokens": 5000,
-                    "messages": [
-                        {
-                            "role": "user",
-                            "content": [
-                                {
-                                    "type": "image",
-                                    "source": {
-                                        "type": "base64",
-                                        "media_type": "image/png",
-                                        "data": base64_string
-                                    }
-                                },
-                                {
-                                    "type": "text",
-                                    "text": table_format_prompt
-                                }
-                            ]
-                        }
-                    ]
-                }
-            }
-
-            
-            body_bytes = json.dumps(payload['body']).encode('utf-8')
-
-
-            response = BedrockClient.invoke_model(
-                body=body_bytes,
-                contentType=payload['contentType'],
-                accept=payload['accept'],
-                modelId=payload['modelId']
-            )
-            
-            response_body = json.loads(response['body'].read().decode('utf-8'))
-            response_body = response_body['content'][0]['text']
-            print("prepared prompt", response_body)
-
-            print('document.CurrentMap.StageS3Uri: ', document.CurrentMap.StageS3Uri.Url,)
 
 
             da = DocAnalysis(
@@ -133,8 +41,9 @@ class ProcessImage():
                 boto3_session=session
             )
             
-            resp = da.generate_schema(message=response_body)
-            schema = resp['output']
+            
+            schema = {"type": "object", "properties": {"invoice_number": {"type": "string", "description": "The unique identifier for the invoice"}, "issue_date": {"type": "string", "description": "The date the invoice was issued"}, "due_date": {"type": "string", "description": "The date the payment for the invoice is due"}, "issuer": {"type": "object", "properties": {"name": {"type": "string", "description": "The name of the company or entity issuing the invoice"}, "address": {"type": "string", "description": "The address of the issuing company or entity"}, "identifier": {"type": "string", "description": "The identifier of the issuing company or entity"}}, "required": ["name", "address", "identifier"]}, "recipient": {"type": "object", "properties": {"name": {"type": "string", "description": "The name of the company or entity receiving the invoice"}, "address": {"type": "string", "description": "The address of the receiving company or entity"}, "identifier": {"type": "string", "description": "The identifier of the receiving company or entity"}}, "required": ["name", "address", "identifier"]}, "line_items": {"type": "array", "items": {"type": "object", "properties": {"product_id": {"type": "string", "description": "The identifier for the product or service"}, "description": {"type": "string", "description": "A description of the product or service"}, "quantity": {"type": "number", "description": "The quantity of the product or service"}, "unit_price": {"type": "number", "description": "The price per unit of the product or service"}, "discount": {"type": "number", "description": "The discount applied to the unit price"}, "discounted_price": {"type": "number", "description": "The price per unit after discount"}, "tax_rate": {"type": "number", "description": "The tax rate applied to the unit price"}, "total_price": {"type": "number", "description": "The total price for the line item (quantity * unit_price)"}}, "required": ["product_id", "description", "quantity", "unit_price", "discount", "discounted_price", "tax_rate", "total_price"]}}, "totals": {"type": "object", "properties": {"subtotal": {"type": "number", "description": "The total of all line item prices before taxes and fees"}, "discount": {"type": "number", "description": "The total discount applied"}, "tax": {"type": "number", "description": "The amount of tax applied to the subtotal"}, "total": {"type": "number", "description": "The total amount due for the invoice after taxes and fees"}}, "required": ["subtotal", "discount", "tax", "total"]}}, "required": ["invoice_number", "issue_date", "due_date", "issuer", "recipient", "line_items", "totals"]}
+
 
             print("schema: ", schema)
 
