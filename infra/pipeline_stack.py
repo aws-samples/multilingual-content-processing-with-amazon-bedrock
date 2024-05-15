@@ -108,7 +108,7 @@ class PipelineStack(Stack):
         index_pk   = 'StageState'
         index_sk   = 'OrderStamp'
     
-        self.__tdd_table_pipeline = aws_dynamodb.Table(
+        self.__mcp_table_pipeline = aws_dynamodb.Table(
             scope           = self,
             id              = table_name,
             table_name      = table_name,
@@ -117,18 +117,18 @@ class PipelineStack(Stack):
             removal_policy  = RemovalPolicy.DESTROY,
         )
 
-        self.__tdd_table_pipeline.add_global_secondary_index(
+        self.__mcp_table_pipeline.add_global_secondary_index(
             index_name      = index_name,
             partition_key   = aws_dynamodb.Attribute(name = index_pk, type = aws_dynamodb.AttributeType.STRING),
             sort_key        = aws_dynamodb.Attribute(name = index_sk, type = aws_dynamodb.AttributeType.STRING),
             projection_type = aws_dynamodb.ProjectionType.ALL,
         )
 
-        self.__tdd_store_document = self.__bucket
+        self.__mcp_store_document = self.__bucket
 
         self.__common_variables = {
-            'STORE_DOCUMENT' : self.__tdd_store_document.bucket_name,
-            'TABLE_PIPELINE' : self.__tdd_table_pipeline.table_name,
+            'STORE_DOCUMENT' : self.__mcp_store_document.bucket_name,
+            'TABLE_PIPELINE' : self.__mcp_table_pipeline.table_name,
             'INDEX_PROGRESS' : index_name,
             'PREFIX'         : self.__prefix,
             'SUFFIX'         : self.__suffix,
@@ -143,7 +143,7 @@ class PipelineStack(Stack):
             prefix = self.__prefix,
             common = self.__common_variables,
             source = self.__source,
-            bucket = self.__tdd_store_document,
+            bucket = self.__mcp_store_document,
             liquid = self.__liquid
         )
 
@@ -191,19 +191,19 @@ class PipelineStack(Stack):
                                         pipeline_trigger_construct : PipelineTriggerConstruct):
 
         for lambda_function in pipeline_manager_construct.get_manager_lambdas().values() :
-            self.__tdd_table_pipeline.grant_read_write_data(lambda_function)
+            self.__mcp_table_pipeline.grant_read_write_data(lambda_function)
 
         for lambda_function in pipeline_process_construct.get_stage_await_lambdas().values() :
-            self.__tdd_table_pipeline.grant_read_write_data(lambda_function)
-            self.__tdd_store_document.grant_read_write(lambda_function)
+            self.__mcp_table_pipeline.grant_read_write_data(lambda_function)
+            self.__mcp_store_document.grant_read_write(lambda_function)
 
         for lambda_function in pipeline_process_construct.get_stage_actor_lambdas().values() :
-            self.__tdd_table_pipeline.grant_read_write_data(lambda_function)
-            self.__tdd_store_document.grant_read_write(lambda_function)
+            self.__mcp_table_pipeline.grant_read_write_data(lambda_function)
+            self.__mcp_store_document.grant_read_write(lambda_function)
 
         for lambda_function in pipeline_process_construct.get_stage_begin_lambdas().values() :
-            self.__tdd_table_pipeline.grant_read_write_data(lambda_function)
-            self.__tdd_store_document.grant_read_write(lambda_function)
+            self.__mcp_table_pipeline.grant_read_write_data(lambda_function)
+            self.__mcp_store_document.grant_read_write(lambda_function)
 
         for lambda_function in pipeline_trigger_construct.get_trigger_lambdas().values() :
-            self.__tdd_table_pipeline.grant_read_write_data(lambda_function)
+            self.__mcp_table_pipeline.grant_read_write_data(lambda_function)

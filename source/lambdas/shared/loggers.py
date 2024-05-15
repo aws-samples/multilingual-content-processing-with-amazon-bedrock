@@ -39,7 +39,7 @@ class CloudLogger(getLoggerClass()):
 
 setLoggerClass(CloudLogger)
 
-Logger = getLogger('tdd')
+Logger = getLogger('mcp')
 
 Logger.setLevel(DEBUG)
 

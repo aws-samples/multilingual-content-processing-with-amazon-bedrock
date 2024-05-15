@@ -39,7 +39,7 @@ def GetPrefix():
 
     branch = popen('git rev-parse --abbrev-ref HEAD').read().strip().replace('_','').lower()
     
-    return f'tdd-{GetBranch()}'
+    return f'mcp-{GetBranch()}'
 
 def GetBranch():
 

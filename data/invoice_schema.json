@@ -1,0 +1,147 @@
+{
+    "type": "object",
+    "properties": {
+        "invoice_number": {
+            "type": "string",
+            "description": "The unique identifier for the invoice"
+        },
+        "issue_date": {
+            "type": "string",
+            "description": "The date the invoice was issued"
+        },
+        "due_date": {
+            "type": "string",
+            "description": "The date the payment for the invoice is due"
+        },
+        "issuer": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "The name of the company or entity issuing the invoice"
+                },
+                "address": {
+                    "type": "string",
+                    "description": "The address of the issuing company or entity"
+                },
+                "identifier": {
+                    "type": "string",
+                    "description": "The identifier of the issuing company or entity"
+                }
+            },
+            "required": [
+                "name",
+                "address",
+                "identifier"
+            ]
+        },
+        "recipient": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "The name of the company or entity receiving the invoice"
+                },
+                "address": {
+                    "type": "string",
+                    "description": "The address of the receiving company or entity"
+                },
+                "identifier": {
+                    "type": "string",
+                    "description": "The identifier of the receiving company or entity"
+                }
+            },
+            "required": [
+                "name",
+                "address",
+                "identifier"
+            ]
+        },
+        "line_items": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "product_id": {
+                        "type": "string",
+                        "description": "The identifier for the product or service"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "A description of the product or service"
+                    },
+                    "quantity": {
+                        "type": "number",
+                        "description": "The quantity of the product or service"
+                    },
+                    "unit_price": {
+                        "type": "number",
+                        "description": "The price per unit of the product or service"
+                    },
+                    "discount": {
+                        "type": "number",
+                        "description": "The discount applied to the unit price"
+                    },
+                    "discounted_price": {
+                        "type": "number",
+                        "description": "The price per unit after discount"
+                    },
+                    "tax_rate": {
+                        "type": "number",
+                        "description": "The tax rate applied to the unit price"
+                    },
+                    "total_price": {
+                        "type": "number",
+                        "description": "The total price for the line item (quantity * unit_price)"
+                    }
+                },
+                "required": [
+                    "product_id",
+                    "description",
+                    "quantity",
+                    "unit_price",
+                    "discount",
+                    "discounted_price",
+                    "tax_rate",
+                    "total_price"
+                ]
+            }
+        },
+        "totals": {
+            "type": "object",
+            "properties": {
+                "subtotal": {
+                    "type": "number",
+                    "description": "The total of all line item prices before taxes and fees"
+                },
+                "discount": {
+                    "type": "number",
+                    "description": "The total discount applied"
+                },
+                "tax": {
+                    "type": "number",
+                    "description": "The amount of tax applied to the subtotal"
+                },
+                "total": {
+                    "type": "number",
+                    "description": "The total amount due for the invoice after taxes and fees"
+                }
+            },
+            "required": [
+                "subtotal",
+                "discount",
+                "tax",
+                "total"
+            ]
+        }
+    },
+    "required": [
+        "invoice_number",
+        "issue_date",
+        "due_date",
+        "issuer",
+        "recipient",
+        "line_items",
+        "totals"
+    ]
+}

@@ -93,7 +93,7 @@ if  __name__ == '__main__':
                     's3SchemaVersion': '1.0',
                     'configurationId': 'testConfigRule',
                     'bucket': {
-                    'name': 'tdd-acquire-store-document-980451951626-us-east-1',
+                    'name': 'mcp-acquire-store-document-980451951626-us-east-1',
                     'ownerIdentity': {
                         'principalId': 'EXAMPLE'
                     },
