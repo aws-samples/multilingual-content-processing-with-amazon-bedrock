@@ -94,6 +94,7 @@ const PDFComponentContainer = styled.div`
 const PDFViewer = () => {
   //Store state
   const pdfUrl = useStoreState((s) => s.documentModel.url);
+  
   const selectedPage = useStoreState(
     (s) => s.internal.selectedPageNumber
   );
@@ -119,6 +120,14 @@ const PDFViewer = () => {
       jumpToPage(newPageSetFromTable-1);
     }
   }, [jumpToPage, newPageSetFromTable]);
+
+  const pdfExtensions = /\.(pdf)$/i;
+
+  console.log(pdfUrl);
+
+  if (!pdfUrl || !pdfExtensions.test(pdfUrl)) {
+    return null;
+  }
 
   return (
     <PDFComponentContainer>

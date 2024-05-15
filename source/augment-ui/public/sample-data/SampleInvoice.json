@@ -1,0 +1,1185 @@
+{
+    "numPages": 1,
+    "pages": [
+        {
+            "pageNumber": 1,
+            "tables": [
+                {
+                    "tableType": "Table",
+                    "name": "line_items",
+                    "columnTypes": [
+                        "product_id",
+                        "description",
+                        "quantity",
+                        "unit_price",
+                        "discount",
+                        "discounted_price",
+                        "tax_rate",
+                        "total_price"
+                    ],
+                    "rows": [
+                        [
+                            {
+                                "text": "239874",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-0-r-br"
+                            },
+                            {
+                                "text": "Usluga konzultacija",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-0-r-br"
+                            },
+                            {
+                                "text": 1,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-0-r-br"
+                            },
+                            {
+                                "text": 1000.0,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-0-r-br"
+                            },
+                            {
+                                "text": 10,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-0-r-br"
+                            },
+                            {
+                                "text": 900.0,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-0-r-br"
+                            },
+                            {
+                                "text": 25,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-0-r-br"
+                            },
+                            {
+                                "text": 1125.0,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-0-r-br"
+                            }
+                        ],
+                        [
+                            {
+                                "text": "685391",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-1-r-br"
+                            },
+                            {
+                                "text": "Ra\u010dunalo Dell Inspiron",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-1-r-br"
+                            },
+                            {
+                                "text": 2,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-1-r-br"
+                            },
+                            {
+                                "text": 4500.0,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-1-r-br"
+                            },
+                            {
+                                "text": 5,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-1-r-br"
+                            },
+                            {
+                                "text": 4275.0,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-1-r-br"
+                            },
+                            {
+                                "text": 25,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-1-r-br"
+                            },
+                            {
+                                "text": 10687.5,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-1-r-br"
+                            }
+                        ],
+                        [
+                            {
+                                "text": "472159",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-2-r-br"
+                            },
+                            {
+                                "text": "Toner za printer HP",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-2-r-br"
+                            },
+                            {
+                                "text": 3,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-2-r-br"
+                            },
+                            {
+                                "text": 750.0,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-2-r-br"
+                            },
+                            {
+                                "text": 5,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-2-r-br"
+                            },
+                            {
+                                "text": 712.5,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-2-r-br"
+                            },
+                            {
+                                "text": 25,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-2-r-br"
+                            },
+                            {
+                                "text": 2671.88,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-2-r-br"
+                            }
+                        ],
+                        [
+                            {
+                                "text": "382475",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-3-r-br"
+                            },
+                            {
+                                "text": "Monitor LG 24\"",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-3-r-br"
+                            },
+                            {
+                                "text": 2,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-3-r-br"
+                            },
+                            {
+                                "text": 1200.0,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-3-r-br"
+                            },
+                            {
+                                "text": 10,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-3-r-br"
+                            },
+                            {
+                                "text": 1080.0,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-3-r-br"
+                            },
+                            {
+                                "text": 25,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-3-r-br"
+                            },
+                            {
+                                "text": 2700.0,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-3-r-br"
+                            }
+                        ],
+                        [
+                            {
+                                "text": "492836",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-4-r-br"
+                            },
+                            {
+                                "text": "Tipkovnica Logitech K120",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-4-r-br"
+                            },
+                            {
+                                "text": 5,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-4-r-br"
+                            },
+                            {
+                                "text": 150.0,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-4-r-br"
+                            },
+                            {
+                                "text": 5,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-4-r-br"
+                            },
+                            {
+                                "text": 142.5,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-4-r-br"
+                            },
+                            {
+                                "text": 25,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-4-r-br"
+                            },
+                            {
+                                "text": 893.75,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-4-r-br"
+                            }
+                        ],
+                        [
+                            {
+                                "text": "592837",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-5-r-br"
+                            },
+                            {
+                                "text": "Mi\u0161 Logitech M185",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-5-r-br"
+                            },
+                            {
+                                "text": 4,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-5-r-br"
+                            },
+                            {
+                                "text": 100.0,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-5-r-br"
+                            },
+                            {
+                                "text": 5,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-5-r-br"
+                            },
+                            {
+                                "text": 95.0,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-5-r-br"
+                            },
+                            {
+                                "text": 25,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-5-r-br"
+                            },
+                            {
+                                "text": 475.0,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-5-r-br"
+                            }
+                        ],
+                        [
+                            {
+                                "text": "982475",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-6-r-br"
+                            },
+                            {
+                                "text": "Pisa\u010d Canon PIXMA",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-6-r-br"
+                            },
+                            {
+                                "text": 1,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-6-r-br"
+                            },
+                            {
+                                "text": 600.0,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-6-r-br"
+                            },
+                            {
+                                "text": 5,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-6-r-br"
+                            },
+                            {
+                                "text": 570.0,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-6-r-br"
+                            },
+                            {
+                                "text": 25,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-6-r-br"
+                            },
+                            {
+                                "text": 712.5,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-6-r-br"
+                            }
+                        ],
+                        [
+                            {
+                                "text": "782639",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-7-r-br"
+                            },
+                            {
+                                "text": "USB Flash Drive 64GB",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-7-r-br"
+                            },
+                            {
+                                "text": 10,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-7-r-br"
+                            },
+                            {
+                                "text": 80.0,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-7-r-br"
+                            },
+                            {
+                                "text": 10,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-7-r-br"
+                            },
+                            {
+                                "text": 72.0,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-7-r-br"
+                            },
+                            {
+                                "text": 25,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-7-r-br"
+                            },
+                            {
+                                "text": 900.0,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-7-r-br"
+                            }
+                        ],
+                        [
+                            {
+                                "text": "891234",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-8-r-br"
+                            },
+                            {
+                                "text": "Papir za ispis A4",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-8-r-br"
+                            },
+                            {
+                                "text": 20,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-8-r-br"
+                            },
+                            {
+                                "text": 25.0,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-8-r-br"
+                            },
+                            {
+                                "text": 5,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-8-r-br"
+                            },
+                            {
+                                "text": 23.75,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-8-r-br"
+                            },
+                            {
+                                "text": 25,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-8-r-br"
+                            },
+                            {
+                                "text": 593.75,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.0,
+                                    "height": 0.0
+                                },
+                                "tag": "row-8-r-br"
+                            }
+                        ]
+                    ],
+                    "headerColumnTypes": {}
+                },
+                {
+                    "name": "formdata",
+                    "tableType": "Form",
+                    "columnTypes": [
+                        "Key",
+                        "Value"
+                    ],
+                    "rows": [
+                        [
+                            {
+                                "text": "invoice_number",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.1,
+                                    "height": 0.02
+                                },
+                                "tag": "invoice_number-key"
+                            },
+                            {
+                                "text": "1006/V01/17",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.2,
+                                    "width": 0.3,
+                                    "height": 0.02
+                                },
+                                "tag": "invoice_number-value"
+                            }
+                        ],
+                        [
+                            {
+                                "text": "issue_date",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.1,
+                                    "height": 0.02
+                                },
+                                "tag": "issue_date-key"
+                            },
+                            {
+                                "text": "05.06.24",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.2,
+                                    "width": 0.3,
+                                    "height": 0.02
+                                },
+                                "tag": "issue_date-value"
+                            }
+                        ],
+                        [
+                            {
+                                "text": "due_date",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.1,
+                                    "height": 0.02
+                                },
+                                "tag": "due_date-key"
+                            },
+                            {
+                                "text": "05.06.24",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.2,
+                                    "width": 0.3,
+                                    "height": 0.02
+                                },
+                                "tag": "due_date-value"
+                            }
+                        ],
+                        [
+                            {
+                                "text": "issuer_name",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.1,
+                                    "height": 0.02
+                                },
+                                "tag": "issuer_name-key"
+                            },
+                            {
+                                "text": "AWSomecompany",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.2,
+                                    "width": 0.3,
+                                    "height": 0.02
+                                },
+                                "tag": "issuer_name-value"
+                            }
+                        ],
+                        [
+                            {
+                                "text": "issuer_address",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.1,
+                                    "height": 0.02
+                                },
+                                "tag": "issuer_address-key"
+                            },
+                            {
+                                "text": "DOMOVINSKOG RATA 1/B, 21210 Solin",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.2,
+                                    "width": 0.3,
+                                    "height": 0.02
+                                },
+                                "tag": "issuer_address-value"
+                            }
+                        ],
+                        [
+                            {
+                                "text": "issuer_identifier",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.1,
+                                    "height": 0.02
+                                },
+                                "tag": "issuer_identifier-key"
+                            },
+                            {
+                                "text": "HR07461023820074896622",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.2,
+                                    "width": 0.3,
+                                    "height": 0.02
+                                },
+                                "tag": "issuer_identifier-value"
+                            }
+                        ],
+                        [
+                            {
+                                "text": "recipient_name",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.1,
+                                    "height": 0.02
+                                },
+                                "tag": "recipient_name-key"
+                            },
+                            {
+                                "text": "Anycompany",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.2,
+                                    "width": 0.3,
+                                    "height": 0.02
+                                },
+                                "tag": "recipient_name-value"
+                            }
+                        ],
+                        [
+                            {
+                                "text": "recipient_address",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.1,
+                                    "height": 0.02
+                                },
+                                "tag": "recipient_address-key"
+                            },
+                            {
+                                "text": "Put Duilova 8/B, 21000 Split",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.2,
+                                    "width": 0.3,
+                                    "height": 0.02
+                                },
+                                "tag": "recipient_address-value"
+                            }
+                        ],
+                        [
+                            {
+                                "text": "recipient_identifier",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.1,
+                                    "height": 0.02
+                                },
+                                "tag": "recipient_identifier-key"
+                            },
+                            {
+                                "text": "58432790126",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.2,
+                                    "width": 0.3,
+                                    "height": 0.02
+                                },
+                                "tag": "recipient_identifier-value"
+                            }
+                        ],
+                        [
+                            {
+                                "text": "totals_subtotal",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.1,
+                                    "height": 0.02
+                                },
+                                "tag": "totals_subtotal-key"
+                            },
+                            {
+                                "text": 7082.26,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.2,
+                                    "width": 0.3,
+                                    "height": 0.02
+                                },
+                                "tag": "totals_subtotal-value"
+                            }
+                        ],
+                        [
+                            {
+                                "text": "totals_discount",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.1,
+                                    "height": 0.02
+                                },
+                                "tag": "totals_discount-key"
+                            },
+                            {
+                                "text": 39.59,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.2,
+                                    "width": 0.3,
+                                    "height": 0.02
+                                },
+                                "tag": "totals_discount-value"
+                            }
+                        ],
+                        [
+                            {
+                                "text": "totals_tax",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.1,
+                                    "height": 0.02
+                                },
+                                "tag": "totals_tax-key"
+                            },
+                            {
+                                "text": 751.97,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.2,
+                                    "width": 0.3,
+                                    "height": 0.02
+                                },
+                                "tag": "totals_tax-value"
+                            }
+                        ],
+                        [
+                            {
+                                "text": "totals_total",
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.0,
+                                    "width": 0.1,
+                                    "height": 0.02
+                                },
+                                "tag": "totals_total-key"
+                            },
+                            {
+                                "text": 939.96,
+                                "confidence": 99.9,
+                                "boundingBox": {
+                                    "top": 0.0,
+                                    "left": 0.2,
+                                    "width": 0.3,
+                                    "height": 0.02
+                                },
+                                "tag": "totals_total-value"
+                            }
+                        ]
+                    ],
+                    "headerColumnTypes": {}
+                }
+            ]
+        }
+    ],
+    "tableTypes": [
+        {
+            "name": "Table",
+            "columnTypes": [
+                "product_id",
+                "description",
+                "quantity",
+                "unit_price",
+                "discount",
+                "discounted_price",
+                "tax_rate",
+                "total_price"
+            ]
+        },
+        {
+            "name": "Form",
+            "columnTypes": [
+                "Key",
+                "Value"
+            ]
+        }
+    ],
+    "metadata": {
+        "sourceDocumentUrl": "s3://mcp-store-document-965637542341/acquire/croatian_invoice.pdf"
+    }
+}

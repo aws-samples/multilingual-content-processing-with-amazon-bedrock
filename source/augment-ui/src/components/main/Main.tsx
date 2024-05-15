@@ -6,6 +6,7 @@ import AppNavbar from "components/main/AppNavbar";
 // import PDFViewer from "components/pdf-viewer/PDFViewer";
 import ImageViewer from "components/image-viewer/ImageViewer";
 import TableView from "components/table/TableView";
+import PDFViewer from "components/pdf-viewer/PDFViewer";
 // import { useStoreActions, useStoreState } from "appstore";
 
 const MainContainer = styled.div`
@@ -38,6 +39,7 @@ export default () => {
       <AppNavbar />
       <ContentContainer>
         <ImageViewer />
+        <PDFViewer />
         <TableView />
       </ContentContainer>
     </MainContainer>

@@ -32,15 +32,20 @@ const Image = styled.div`
 const ImageViewer = () => {
   const imageUrl = useStoreState(s => s.documentModel.url);
   const alt = "Document to review";
+  const imageExtensions = /\.(jpeg|jpg|gif|png|bmp|webp)$/i;
+
+  console.log(imageUrl);
+
+  if (!imageUrl || !imageExtensions.test(imageUrl)) {
+    return null;
+  }
 
   return (
     <ImageComponentContainer>
       <ViewerContainer>
-        {imageUrl ? (
-          <Image>
-            <img src={imageUrl} alt={alt} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-          </Image>
-        ) : null}
+        <Image>
+          <img src={imageUrl} alt={alt} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+        </Image>
       </ViewerContainer>
     </ImageComponentContainer>
   );
