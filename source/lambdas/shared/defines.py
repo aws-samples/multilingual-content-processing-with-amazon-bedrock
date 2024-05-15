@@ -35,7 +35,6 @@ class Grade:
 class Stage:
     INVALID  = 'invalid'
     ACQUIRE  = 'acquire'
-    CLASSIFY = 'classify'
     CONVERT  = 'convert'
     EXTRACT  = 'extract'
     RESHAPE  = 'reshape'

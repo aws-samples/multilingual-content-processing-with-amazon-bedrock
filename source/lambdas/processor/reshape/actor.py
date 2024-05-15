@@ -25,7 +25,7 @@ def lambda_handler(event, context):
     print('documentName', documentName)
     
     sourceS3Uri = S3Uri(Bucket = STORE_BUCKET, Object = f'{documentName}.json')
-    outputS3Uri = S3Uri(Bucket = STORE_BUCKET, Object = f'{STAGE}/{document.DocumentID}/humanInTheLoop-Operated.json')
+    outputS3Uri = S3Uri(Bucket = STORE_BUCKET, Object = f'{STAGE}/{document.DocumentID}/humanInTheLoop-Reshaped.json')
 
     try:
 
@@ -36,8 +36,12 @@ def lambda_handler(event, context):
 
         print(hil_document)
 
-        # apply some busniness rules
-        
+        # Add empty tableType and headerColumnTypes to each page table
+        # (this is where A2I annotation values will go)
+        for page in hil_document['pages']:
+            for table in page['tables']:
+                table['headerColumnTypes'] = {}
+
         outputS3Uri.PutJSON(body = hil_document)
 
         Logger.info(f'{STAGE} Actor : Stopped Processing DocumentID = {document.DocumentID}')

@@ -46,9 +46,6 @@ class StageMap:
 class AcquireMap(StageMap):
   pass
 
-@dataclass
-class ClassifyMap(StageMap):
-  pass
 
 @dataclass
 class ConvertMap(StageMap):
@@ -87,7 +84,6 @@ class Document:
     OrderStamp: str = '?#?'
 
     AcquireMap:  AcquireMap = field(default_factory = AcquireMap)
-    ClassifyMap: ClassifyMap = field(default_factory = ClassifyMap)
     ConvertMap:  ConvertMap = field(default_factory = ConvertMap)
     ExtractMap:  ExtractMap = field(default_factory = ExtractMap)
     ReshapeMap:  ReshapeMap = field(default_factory = ReshapeMap)

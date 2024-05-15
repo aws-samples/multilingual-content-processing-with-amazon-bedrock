@@ -121,7 +121,7 @@ const PDFViewer = () => {
     }
   }, [jumpToPage, newPageSetFromTable]);
 
-  const pdfExtensions = /\.(pdf)$/i;
+  const pdfExtensions = /\.(pdf)(\?.*)?$/i;
 
   console.log(pdfUrl);
 

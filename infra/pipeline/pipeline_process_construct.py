@@ -24,10 +24,9 @@ class Process:
     AUGMENT = 'augment'
     CATALOG = 'catalog'
     CONVERT = 'convert'
-    CLASSIFY = 'classify'
     EXTRACT = 'extract'
     OPERATE = 'operate'
-    # RESHAPE = 'reshape'
+    RESHAPE = 'reshape'
 
 class Aspect:
     BEGIN = 'begin'
@@ -65,9 +64,9 @@ class PipelineProcessConstruct(Construct):
         self.__stage_await_lambdas = {}
 
         
-        # self.__create_stage_classify(stage = Process.CLASSIFY)
         self.__create_stage_extract(stage = Process.EXTRACT)
         self.__create_stage_operate(stage = Process.OPERATE)
+        self.__create_stage_reshape(stage = Process.RESHAPE)
         self.__create_stage_augment(stage = Process.AUGMENT)
         self.__create_stage_catalog(stage = Process.CATALOG)
 
@@ -195,26 +194,6 @@ class PipelineProcessConstruct(Construct):
         
         rule.add_target(target = aws_events_targets.SqsQueue(queue = queue))
     
-    def __create_stage_classify(self, stage):
-        queue = self.__create_queue(stage)
-
-        self.__create_actor_lambda(stage, queue)
-        self.__create_begin_lambda(stage, queue)
-        self.__create_await_lambda(stage, queue)
-
-        # Create Bedrock service role
-        self.__srole_bedrock = aws_iam.Role(
-            scope      = self,
-            id         = f'{self.__prefix}-srole-bedrock',
-            assumed_by = aws_iam.ServicePrincipal('bedrock.amazonaws.com') 
-        )
-
-        self.__srole_bedrock.grant_pass_role(self.__stage_actor_lambdas[Process.CLASSIFY])
-
-        self.__stage_actor_lambdas[Process.CLASSIFY].role.add_managed_policy(
-            aws_iam.ManagedPolicy.from_aws_managed_policy_name('AmazonBedrockFullAccess')
-        )
-
         
 
     def __create_stage_catalog(self, stage):

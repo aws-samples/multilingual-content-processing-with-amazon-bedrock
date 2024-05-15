@@ -43,7 +43,7 @@ class AugmentBeginProcessor(BeginProcessor):
             humanLoopID   = Sanatize(document.DocumentID.replace('.', '-'))
             humanLoopName = Sanatize(f'{flowName}--{humanLoopID}--{humanLoopTime}').lower()
 
-            sourceS3Uri = S3Uri(Bucket = STORE_BUCKET, Object = document.OperateMap.StageS3Uri.Object)
+            sourceS3Uri = S3Uri(Bucket = STORE_BUCKET, Object = document.ReshapeMap.StageS3Uri.Object)
             content = sourceS3Uri.GetJSON()
 
             response = A2IClient.start_human_loop(

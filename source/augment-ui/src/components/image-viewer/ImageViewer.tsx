@@ -32,7 +32,7 @@ const Image = styled.div`
 const ImageViewer = () => {
   const imageUrl = useStoreState(s => s.documentModel.url);
   const alt = "Document to review";
-  const imageExtensions = /\.(jpeg|jpg|gif|png|bmp|webp)$/i;
+  const imageExtensions = /\.(jpeg|jpg|gif|png|bmp|webp|svg)(\?.*)?$/i;
 
   console.log(imageUrl);
 
