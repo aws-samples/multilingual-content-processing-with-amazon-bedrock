@@ -1,5 +1,5 @@
 {
-  "name": "aws-tabular-document-digitization",
+  "name": "multilingual-content-processing-with-amazon-bedrock",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
