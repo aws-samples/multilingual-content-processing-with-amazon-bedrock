@@ -11,9 +11,7 @@ from aws_cdk import (
 from aws_cdk.aws_ecr_assets import DockerImageAsset
 
 from constructs import Construct
-from aws_cdk.custom_resources import (
-    Provider
-)
+
 
 class Trigger:
     S3 = 's3'
@@ -58,56 +56,6 @@ class PipelineTriggerConstruct(Construct):
             aws_s3.NotificationKeyFilter(prefix = 'acquire/')
         )
 
-    def arm_s3_trigger_delayed(self):
-
-        lambda_role = aws_iam.Role(
-            scope      = self,
-            id         = f'{self.__prefix}-srole-creator-trigger-s3',
-            assumed_by = aws_iam.ServicePrincipal('lambda.amazonaws.com'),
-        )
-
-      # allow us to fetch worker template from s3 and call sagemaker APIs
-        lambda_role.add_to_policy(
-            statement = aws_iam.PolicyStatement(
-                resources = ['*'],
-                actions   = [
-                    'lambda:InvokeFunction',
-                    's3:*',
-                    'sagemaker:*',
-                    'logs:CreateLogGroup',
-                    'logs:CreateLogStream',
-                    'logs:PutLogEvents',
-                ],
-            )
-        )
-
-        lambda_path = str(Path(__file__).parent.joinpath('custom_resource_manager/').absolute())
-
-        lambda_func = aws_lambda.Function(
-            scope         = self,
-            id            = f'{self.__prefix}-creator-trigger-s3',
-            function_name = f'{self.__prefix}-creator-trigger-s3',
-            code          = aws_lambda.Code.from_asset(lambda_path),
-            handler       = 's3_trigger_manager.lambda_handler',
-            runtime       = aws_lambda.Runtime.PYTHON_3_10,
-            timeout       = Duration.minutes(15),
-            memory_size   = 3000,
-            role          = lambda_role,
-        )
-
-        provider = Provider(
-            scope            = self,
-            id               = f'{self.__prefix}-provider-trigger-s3',
-            on_event_handler = lambda_func
-        )
-
-        trigger_resource = CustomResource(
-            scope         = self,
-            id            = f'{self.__prefix}-resource-trigger-s3',
-            service_token = provider.service_token,
-            properties    = {})
-
-        trigger_resource.node.add_dependency(self.__bucket)
 
     def __create_lambda_function(self, trigger, environ):
 

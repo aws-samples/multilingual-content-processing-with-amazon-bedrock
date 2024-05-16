@@ -7,7 +7,7 @@ import aws_cdk as cdk
 from pathlib      import Path
 
 from infra.standard_utils import Env
-from infra.baseline_stack import BaselineStack # common s3bucket resource
+
 from infra.template_stack import TemplateStack # worker template resource
 from infra.pipeline_stack import PipelineStack
 

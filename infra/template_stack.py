@@ -12,7 +12,6 @@ from aws_cdk import (
 from constructs import Construct
 from pathlib import Path
 
-from infra.shared.s3_custom_bucket_construct import S3CustomBucketConstruct
 
 
 class TemplateStack(Stack):
@@ -36,13 +35,14 @@ class TemplateStack(Stack):
 
         self.__bucket_name = f'{self.__prefix}-store-resource-{self.__suffix}'
 
-        self.__bucket = bucket or S3CustomBucketConstruct(
+
+        self.__bucket = aws_s3.Bucket(
             scope                    = self,
             id                       = self.__bucket_name,
             bucket_name              = self.__bucket_name,
-            block_public_access      = aws_s3.BlockPublicAccess.BLOCK_ALL,
-            removal_policy           = RemovalPolicy.DESTROY,
-            recursive_object_removal = True
+            block_public_access      = aws_s3.BlockPublicAccess.BLOCK_ALL,               
+            removal_policy=RemovalPolicy.DESTROY,
+            auto_delete_objects=True
         )
 
         # this prefix is used to generate liquid {{ s3://... | grant_read_access }} tags inside

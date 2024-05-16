@@ -15,7 +15,7 @@ from .pipeline.pipeline_process_construct import PipelineProcessConstruct
 from .pipeline.pipeline_manager_construct import PipelineManagerConstruct
 from .pipeline.pipeline_trigger_construct import PipelineTriggerConstruct
 from .pipeline.pipeline_machine_construct import PipelineMachineConstruct
-from .shared.s3_custom_bucket_construct import S3CustomBucketConstruct
+
 
 
 class PipelineStack(Stack):
@@ -40,13 +40,13 @@ class PipelineStack(Stack):
 
         self.__bucket_name = f'{self.__prefix}-store-document-{self.__suffix}'
 
-        self.__bucket = bucket or S3CustomBucketConstruct(
+        self.__bucket = aws_s3.Bucket(
             scope                    = self,
             id                       = self.__bucket_name,
             bucket_name              = self.__bucket_name,
-            recursive_object_removal = True,
-            block_public_access      = aws_s3.BlockPublicAccess.BLOCK_ALL,
+            block_public_access      = aws_s3.BlockPublicAccess.BLOCK_ALL,               
             removal_policy           = RemovalPolicy.DESTROY,
+            auto_delete_objects      = True,
             cors                     = [
                 aws_s3.CorsRule(
                     allowed_methods=[
@@ -163,7 +163,7 @@ class PipelineStack(Stack):
             prefix = self.__prefix,
             source = self.__source,
             common = self.__common_variables,
-            bucket = self.__bucket
+            bucket = self.__mcp_store_document
         )
 
         self.__grant_persistence_permissions(
@@ -183,7 +183,7 @@ class PipelineStack(Stack):
         )
 
         pipeline_trigger_construct.arm_s3_trigger()
-      # pipeline_trigger_construct.arm_s3_trigger_delayed() # custom resource
+      
 
     def __grant_persistence_permissions(self,
                                         pipeline_process_construct : PipelineProcessConstruct,

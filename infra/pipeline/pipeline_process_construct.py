@@ -314,43 +314,12 @@ class PipelineProcessConstruct(Construct):
         self.__stage_await_lambdas[stage] = lambda_function
 
 
-    def __package_dependencies(self, source_directory):
-        requirements_path = os.path.join(source_directory, 'requirements.txt')
-        if not os.path.exists(requirements_path):
-            return source_directory  # No requirements.txt found, return original source directory
-
-        # Directory to store packaged code
-        deployment_dir = os.path.join(source_directory, 'deployment')
-        os.makedirs(deployment_dir, exist_ok=True)
-
-        # Install packages into the deployment directory
-        subprocess.check_call(
-            [f'pip install -r {requirements_path} -t {deployment_dir}'],
-            shell=True
-        )
-
-        # Copy lambda function code into the deployment directory
-        subprocess.check_call(
-            [f'cp -r {source_directory}/* {deployment_dir}'],
-            shell=True
-        )
-
-        return deployment_dir
 
 
     def __create_lambda_function(self, stage, aspect, environ):
 
         environment = self.__common.copy()
         environment.update(environ)
-
-        # docker_image = DockerImageAsset(self, f'{self.__prefix}-docker-{stage}-{aspect}',
-        #     directory=f'{self.__source}',
-        #     build_args={
-        #         "STAGE": stage,
-        #         "ASPECT": aspect,
-        #     })
-        
-
 
 
         lambda_function = aws_lambda.DockerImageFunction(
