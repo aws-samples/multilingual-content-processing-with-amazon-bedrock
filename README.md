@@ -45,6 +45,9 @@ Once you’ve added yourself to the private workforce teams and confirmed your e
 - For Mac : https://docs.docker.com/docker-for-mac/install
 - For Win : https://docs.docker.com/docker-for-windows/install
 
+3. Authenticate Docker to an Amazon Elastic Container Registry (ECR) Public repository:
+- aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aw
+
 *Instruction to Deploy Application to AWS Cloud*
 
 1. cd multilingual-content-processing
