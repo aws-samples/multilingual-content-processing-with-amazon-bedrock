@@ -59,7 +59,7 @@ class TemplateStack(Stack):
 
         bundler = {
             'image'      : DockerImage.from_registry('node:16.14.2'),
-            'user'       : 'root',
+            'user'       : 'node',
             'environment': environ,
             'command'    :
             [
@@ -69,6 +69,7 @@ class TemplateStack(Stack):
                     [
                         'npm install',
                         'npm run build-hitl',
+                        'mkdir -p /asset-output',
                         'cp -R build/* /asset-output/',
                     ]
                 ),
