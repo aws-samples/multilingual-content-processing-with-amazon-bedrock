@@ -58,3 +58,10 @@ Once you’ve added yourself to the private workforce teams and confirmed your e
 6. edit cdk.json, set your work team name   - Pre-create the workteam via aws console, and make sure to match workteam name in same region/account
 7. cdk deploy --all                         - Deploy application
 
+## Security
+
+See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
+
+## License
+
+This library is licensed under the MIT-0 License. See the LICENSE file.
