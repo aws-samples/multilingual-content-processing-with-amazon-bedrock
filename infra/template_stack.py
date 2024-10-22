@@ -6,8 +6,11 @@ from aws_cdk import (
     aws_s3,
     aws_s3_deployment,
     RemovalPolicy,
-    DockerImage    
+    DockerImage,
+    aws_iam,
+    Aws
 )
+from cdk_nag import  NagSuppressions
 
 from constructs import Construct
 from pathlib import Path
@@ -42,8 +45,11 @@ class TemplateStack(Stack):
             bucket_name              = self.__bucket_name,
             block_public_access      = aws_s3.BlockPublicAccess.BLOCK_ALL,               
             removal_policy=RemovalPolicy.DESTROY,
-            auto_delete_objects=True
+            auto_delete_objects=True,
+            versioned=True,
+            enforce_ssl=True
         )
+
 
         # this prefix is used to generate liquid {{ s3://... | grant_read_access }} tags inside
         # the worker template during the 'npm run build-hitl' step.
@@ -81,7 +87,7 @@ class TemplateStack(Stack):
             bundling = bundler
         )
 
-      # deploy the worker template bundle to s3
+        # deploy the worker template bundle to s3
         aws_s3_deployment.BucketDeployment(
             scope                  = self,
             id                     = f'{self.__prefix}-{self.__source.name}-deploy',
@@ -98,3 +104,7 @@ class TemplateStack(Stack):
         return {
             'liquid_uri' : f'{self.__assets_uri}/worker-template.liquid.html'
         }
+
+    @property
+    def bucket_name(self) -> str:
+        return self.__bucket.bucket_name

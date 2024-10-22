@@ -1,8 +1,18 @@
 # Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-from aws_cdk                         import Duration
-from aws_cdk.aws_stepfunctions       import StateMachine, Parallel, Choice, Condition, Wait, WaitTime, DefinitionBody
+from aws_cdk                         import Duration, aws_logs as logs, RemovalPolicy
+from aws_cdk.aws_stepfunctions       import (
+    StateMachine, 
+    Parallel, 
+    Choice, 
+    Condition, 
+    Wait,
+    WaitTime, 
+    DefinitionBody, 
+    LogOptions, 
+    LogLevel
+)
 from aws_cdk.aws_stepfunctions_tasks import LambdaInvoke
 from constructs import Construct
 
@@ -57,11 +67,23 @@ class PipelineMachineConstruct(Construct):
         step_startup.next(step_promote).next(step_checkup)
         step_process.next(step_standby).next(step_promote)
 
+        log_group = logs.LogGroup(
+            scope=self.__scope,
+            id=f'{self.__prefix}-loggroup-state-pipeline',
+            log_group_name=f'{self.__prefix}-loggroup-state-pipeline',
+            removal_policy=RemovalPolicy.DESTROY
+        )
+
         state_machine = StateMachine(
             scope              = self,
             id                 = f'{self.__prefix}-state-pipeline',
             state_machine_name = f'{self.__prefix}-state-pipeline',
             definition_body    = DefinitionBody.from_chainable(step_startup),
+            tracing_enabled=True,
+            logs=LogOptions(
+                destination=log_group,
+                level=LogLevel.ALL  # Log all events
+            )
         )
 
         for lambda_function in self.__pipeline_trigger_construct.get_trigger_lambdas().values():

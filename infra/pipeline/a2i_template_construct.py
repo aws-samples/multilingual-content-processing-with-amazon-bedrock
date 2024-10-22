@@ -16,7 +16,8 @@ class A2ITemplateConstruct(Construct):
             scope         : Construct,
             prefix        : str,
             template_name : str,
-            template_path : str
+            template_path : str,
+            bucket_name   : str,
     ) -> None:
 
         super().__init__(scope, template_name)
@@ -32,14 +33,44 @@ class A2ITemplateConstruct(Construct):
             assumed_by = aws_iam.ServicePrincipal('lambda.amazonaws.com'),
         )
 
+    
+        lambda_role.add_to_policy(
+            statement = aws_iam.PolicyStatement(
+                # resources = ["*"],
+                resources = [f"arn:aws:s3:::{bucket_name}", f"arn:aws:s3:::{bucket_name}/*"],
+                actions   = [
+                    's3:ListBucket',
+                    's3:GetObject',
+                ],
+            )
+        )
+
+        lambda_role.add_to_policy(
+            statement = aws_iam.PolicyStatement(
+                resources = [f"arn:aws:lambda:{Aws.REGION}:{Aws.ACCOUNT_ID}:function:{self.__prefix}-creator-template"],
+                actions   = [
+                    'lambda:InvokeFunction',
+                ],
+            )
+        )
+
+
+        lambda_role.add_to_policy(
+            statement = aws_iam.PolicyStatement(
+                resources = [self.get_template_arn()],
+                actions   = [
+                    'sagemaker:CreateHumanTaskUi',
+                    'sagemaker:DeleteHumanTaskUi',
+                ],
+            )
+        )
+    
+        log_group_name = f"/aws/lambda/{self.__prefix}-creator-template"
       # allow us to fetch worker template from s3 and call sagemaker APIs.
         lambda_role.add_to_policy(
             statement = aws_iam.PolicyStatement(
-                resources = ['*'],
+                resources = [f"arn:aws:logs:{Aws.REGION}:{Aws.ACCOUNT_ID}:log-group:{log_group_name}:*"],
                 actions   = [
-                    'lambda:InvokeFunction',
-                    's3:*',
-                    'sagemaker:*',
                     'logs:CreateLogGroup',
                     'logs:CreateLogStream',
                     'logs:PutLogEvents',

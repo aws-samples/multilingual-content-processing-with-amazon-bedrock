@@ -27,6 +27,7 @@ class PipelineStack(Stack):
             suffix : str,
             source : Path,
             liquid : str,
+            resource_bucket_name: str,
             bucket : aws_s3.Bucket = None,
             **kwargs
     ) -> None:
@@ -37,6 +38,7 @@ class PipelineStack(Stack):
         self.__suffix = suffix
         self.__source = source
         self.__liquid = liquid
+        self.__resource_bucket_name = resource_bucket_name
 
         self.__bucket_name = f'{self.__prefix}-store-document-{self.__suffix}'
 
@@ -47,6 +49,8 @@ class PipelineStack(Stack):
             block_public_access      = aws_s3.BlockPublicAccess.BLOCK_ALL,               
             removal_policy           = RemovalPolicy.DESTROY,
             auto_delete_objects      = True,
+            versioned=True,
+            enforce_ssl=True,
             cors                     = [
                 aws_s3.CorsRule(
                     allowed_methods=[
@@ -144,6 +148,8 @@ class PipelineStack(Stack):
             common = self.__common_variables,
             source = self.__source,
             bucket = self.__mcp_store_document,
+            document_bucket_name = self.__bucket_name,
+            resource_bucket_name = self.__resource_bucket_name,
             liquid = self.__liquid
         )
 

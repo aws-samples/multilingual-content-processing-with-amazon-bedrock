@@ -24,6 +24,8 @@ class A2IWorkflowConstruct(Construct):
             task_description  : str,
             task_title        : str,
             template_resource : A2ITemplateConstruct,
+            document_bucket_name,
+            resource_bucket_name,
             template_name     : str = None,
             html_template     : str = None,
             role_arn          : str = None,
@@ -35,6 +37,8 @@ class A2IWorkflowConstruct(Construct):
 
         self.__prefix        = prefix
         self.__workflow_name = workflow_name
+        self.__document_bucket_name = document_bucket_name
+        self.__resource_bucket_name = resource_bucket_name
 
         if  template_resource is None:
           # require template name and template html if we aren't passed a valid template as input
@@ -55,7 +59,7 @@ class A2IWorkflowConstruct(Construct):
             runtime       = aws_lambda.Runtime.PYTHON_3_10,
             timeout       = Duration.minutes(15),
             memory_size   = 3000,
-            role          = self.__get_custom_resource_creation_iam_role()
+            role          = self.__get_custom_resource_creation_iam_role(role_arn)
         )
 
         provider = Provider(
@@ -97,7 +101,12 @@ class A2IWorkflowConstruct(Construct):
 
         role.add_to_policy(
             statement = aws_iam.PolicyStatement(
-                resources = ['arn:aws:s3:::*'],
+                resources = [
+                    f'arn:aws:s3:::{self.__document_bucket_name}',
+                    f'arn:aws:s3:::{self.__document_bucket_name}/*',
+                    f'arn:aws:s3:::{self.__resource_bucket_name}',
+                    f'arn:aws:s3:::{self.__resource_bucket_name}/*'
+                ],
                 actions = [
                     's3:GetObject',
                     's3:PutObject',
@@ -109,7 +118,7 @@ class A2IWorkflowConstruct(Construct):
 
         return role
 
-    def __get_custom_resource_creation_iam_role(self):
+    def __get_custom_resource_creation_iam_role(self, srole_workflow_arn):
 
         lambda_role = aws_iam.Role(
             scope      = self,
@@ -125,7 +134,7 @@ class A2IWorkflowConstruct(Construct):
                     'logs:CreateLogStream',
                     'logs:PutLogEvents',
                 ],
-                resources = ['*']
+                resources=[f'arn:aws:logs:{Aws.REGION}:{Aws.ACCOUNT_ID}:log-group:/aws/lambda/{self.__prefix}-creator-workflow-{self.__workflow_name}:*']
             )
         )
 
@@ -134,7 +143,8 @@ class A2IWorkflowConstruct(Construct):
                 effect    = aws_iam.Effect.ALLOW,
                 actions   = ['sagemaker:CreateFlowDefinition',
                              'sagemaker:DeleteFlowDefinition'],
-                resources = ['*'],
+                resources=[f'arn:aws:sagemaker:{Aws.REGION}:{Aws.ACCOUNT_ID}:flow-definition/{self.__workflow_name}']
+                
             )
         )
 
@@ -142,7 +152,9 @@ class A2IWorkflowConstruct(Construct):
             statement = aws_iam.PolicyStatement(
                 effect    = aws_iam.Effect.ALLOW,
                 actions   = ['IAM:PassRole'],
-                resources = ['*']
+                resources=[
+                    srole_workflow_arn
+                ]
             )
         )
 

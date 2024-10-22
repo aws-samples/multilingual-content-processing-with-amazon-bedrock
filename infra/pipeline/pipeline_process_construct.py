@@ -44,6 +44,8 @@ class PipelineProcessConstruct(Construct):
         source : Path,
         liquid,
         bucket,
+        document_bucket_name,
+        resource_bucket_name,
         **kwargs,
     ) -> None:
 
@@ -54,6 +56,8 @@ class PipelineProcessConstruct(Construct):
 
         self.__common = common
         self.__source = source
+        self.__document_bucket_name = document_bucket_name
+        self.__resource_bucket_name = resource_bucket_name
         self.__bucket = bucket
         self.__liquid = liquid
 
@@ -139,7 +143,8 @@ class PipelineProcessConstruct(Construct):
             scope         = self,
             prefix        = self.__prefix,
             template_name = f'{self.__prefix}-a2i-template',
-            template_path = self.__liquid
+            template_path = self.__liquid,
+            bucket_name = self.__resource_bucket_name
         )
 
         commons = self.node.try_get_context('ENVIRONMENTS')
@@ -161,9 +166,11 @@ class PipelineProcessConstruct(Construct):
             workflow_resource = A2IWorkflowConstruct(
                 scope             = self,
                 workflow_name     = f'{self.__prefix}-wflow-{workteam}',
+                s3_output_path    = self.__bucket.s3_url_for_object(f'augment/.a2i'),
                 prefix            = self.__prefix,
                 template_resource = template_resource,
-                s3_output_path    = self.__bucket.s3_url_for_object(f'augment/.a2i'),
+                document_bucket_name       = self.__document_bucket_name,
+                resource_bucket_name       = self.__resource_bucket_name,
                 workteam_arn      = workteam_arn,
                 task_count        = 1,
                 task_description  = f'Review Tables from Source Document - {workteam.title()}',
@@ -176,8 +183,14 @@ class PipelineProcessConstruct(Construct):
                 f'WFLOW_A2I_{workteam.upper()}_ARN', workflow_resource.get_workflow_arn()
             )
 
-        self.__stage_begin_lambdas[Process.AUGMENT].role.add_managed_policy(
-            aws_iam.ManagedPolicy.from_aws_managed_policy_name('AmazonSageMakerFullAccess')
+        self.__stage_begin_lambdas[Process.AUGMENT].role.add_to_policy(
+            statement = aws_iam.PolicyStatement(
+                effect    = aws_iam.Effect.ALLOW,
+                actions   = ['sagemaker:ListHumanLoops',
+                             'sagemaker:StartHumanLoop',
+                             'sagemaker:StopHumanLoop'],
+                resources=[f'arn:aws:sagemaker:{Aws.REGION}:{Aws.ACCOUNT_ID}:*']
+            )
         )
 
         human_review_event_pattern = aws_events.EventPattern(
@@ -221,8 +234,12 @@ class PipelineProcessConstruct(Construct):
         
         self.__srole_bedrock.grant_pass_role(self.__stage_actor_lambdas[Process.EXTRACT])
 
-        self.__stage_actor_lambdas[Process.EXTRACT].role.add_managed_policy(
-            aws_iam.ManagedPolicy.from_aws_managed_policy_name('AmazonBedrockFullAccess')
+        self.__stage_actor_lambdas[Process.EXTRACT].role.add_to_policy(
+            statement = aws_iam.PolicyStatement(
+                effect    = aws_iam.Effect.ALLOW,
+                actions   = ["bedrock:InvokeModel"],
+                resources=[f'arn:aws:bedrock:{Aws.REGION}::foundation-model/anthropic.claude-3-sonnet-20240229-v1:0',]
+            )
         )
 
 
@@ -243,10 +260,6 @@ class PipelineProcessConstruct(Construct):
         self.__create_begin_lambda(stage, queue)
         self.__create_await_lambda(stage, queue)
 
-        self.__stage_await_lambdas[Process.RESHAPE].role.add_managed_policy(
-            aws_iam.ManagedPolicy.from_aws_managed_policy_name('AmazonTextractFullAccess')
-        )
-
     def __create_queue(self, stage):
 
         self.__stage_queues[stage] = aws_sqs.Queue(
@@ -254,6 +267,7 @@ class PipelineProcessConstruct(Construct):
             scope      = self.__scope,
             id         = f'{self.__prefix}-queue-{stage}',
             queue_name = f'{self.__prefix}-queue-{stage}',
+            enforce_ssl=True
         )
 
         return self.__stage_queues[stage]

@@ -7,3 +7,4 @@ uuid
 docker
 jinja2
 weasyprint
+cdk-nag
