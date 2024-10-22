@@ -9,8 +9,11 @@ with open('./data/japanese_invoice_data.json', 'r', encoding='utf-8') as file:
     data = json.load(file)
 
 # Load templates
-env = Environment(loader=FileSystemLoader(searchpath='./templates'))
-# template = env.get_template('invoice_template_2.html')
+env = Environment(
+    loader=FileSystemLoader(searchpath='./templates'),
+    autoescape=False  # nosec B701: We are not autoescaping intentionally in this use case since this is used internally to generate synthetic documents
+) 
+
 template = env.get_template('template.html')
 
 # Render the template with data
