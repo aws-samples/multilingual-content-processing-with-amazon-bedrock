@@ -22,7 +22,7 @@
     "@types/react-pdf": "^4.0.6",
     "@types/styled-components": "^5.1.4",
     "bootstrap": "^4.5.3",
-    "easy-peasy": "^4.0.1",
+    "easy-peasy": "^4.0.2",
     "jsdom": "^16.4.0",
     "lodash": "^4.17.20",
     "pdfjs-dist": "^2.6.347",
