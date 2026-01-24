@@ -24,7 +24,7 @@
     "bootstrap": "^4.5.3",
     "easy-peasy": "^4.0.1",
     "jsdom": "^16.4.0",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.23",
     "pdfjs-dist": "^2.6.347",
     "polished": "^4.0.3",
     "react": "^16.14.0",
